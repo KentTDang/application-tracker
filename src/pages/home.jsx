@@ -4,15 +4,15 @@ import { addDoc,collection } from "@firebase/firestore";
 
 export default function Home() {
 
-  const messageRef = useRef();
+  const jobTitleRef = useRef();
   const ref = collection(firestore,"job-applications");
   const handleSave = async(e) => {
-    
+
     e.preventDefault();
-    console.log(messageRef.current.value);
+    console.log(jobTitleRef.current.value);
 
     let data = {
-      message: messageRef.current.value,
+      jobTitle: jobTitleRef.current.value,
     }
 
     try {
@@ -25,8 +25,8 @@ export default function Home() {
 
   return <div>
     <form onSubmit={ handleSave }>
-      <label>Enter Message</label>
-        <input type="text" ref={messageRef} />
+      <label>Job Title</label>
+        <input type="text" ref={jobTitleRef} />
         <button type="submit">Save</button>
       
     </form>
