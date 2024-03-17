@@ -21,9 +21,10 @@ export default function SignUp() {
               <Form.Control type="password" ref={passwordRef} required></Form.Control>
             </Form.Group>
             <Form.Group id="password-confirm">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Confirm Email</Form.Label>
               <Form.Control type="password" ref={passwordConfirmRef} required></Form.Control>
             </Form.Group>
+            <Button className='w-100' type="submit">Sign Up</Button>
           </Form>
 
         </Card.Body>
