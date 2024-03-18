@@ -1,15 +1,16 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "@firebase/firestore";
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCUvAHM98ug2iibtjNwGO9CYvcwYawM8uw",
-  authDomain: "application-tracker-ef599.firebaseapp.com",
-  projectId: "application-tracker-ef599",
-  storageBucket: "application-tracker-ef599.appspot.com",
-  messagingSenderId: "177700775749",
-  appId: "1:177700775749:web:55c4ecb97492feb36d002c",
-  measurementId: "G-Z2DS81YJJH"
-};
+const app = firebase.initializeApp({
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
+})
 
-const app = initializeApp(firebaseConfig);
-export const firestore = getFirestore(app);
+export const auth = app.auth()
+export default app
