@@ -1,20 +1,21 @@
 import React, { useRef, useState } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from "react-router-dom"
 
 export default function SignUp() {
 
-  const emailRef = useRef(); 
-  const passwordRef = useRef(); 
-  const passwordConfirmRef = useRef(); 
-  const {signup } = useAuth();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if(passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords do not match");
     }
 
@@ -22,15 +23,13 @@ export default function SignUp() {
       setError("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      console.log(emailRef.current.value + " " + passwordRef.current.value);
     } catch {
       setError("Failed to create an account")
-      console.log(emailRef.current.value + " " + passwordRef.current.value);
     }
 
     setLoading(false)
 
-    
+
   }
 
   return (
@@ -59,7 +58,7 @@ export default function SignUp() {
       </Card>
 
       <div className="w-100 text-center mt-2">
-        Already have an account? log In
+        Already have an account? <Link to="/login">Log in</Link>
       </div>
     </>
   )
