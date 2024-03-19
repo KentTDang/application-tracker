@@ -6,10 +6,18 @@ import { Link, useNavigate } from "react-router-dom"
 export default function Dashboard() {
 
   const [error, setError] = useState("")
-  const {currentUser} = useAuth()
+  const {currentUser, logout} = useAuth()
+  const navigate = useNavigate()
 
-  function handleLogout() {
+  async function handleLogout() {
+    setError('')
 
+    try {
+      await logout()
+      navigate("/login")
+    } catch {
+      setError("Fail to logout")
+    }
   }
 
   return (
@@ -23,7 +31,7 @@ export default function Dashboard() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        <Button variant="link" onClicj={handleLogout}>Log Out</Button>
+        <Button variant="link" onClick={handleLogout}>Log Out</Button>
       </div>
     </>
   )
