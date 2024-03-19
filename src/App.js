@@ -1,10 +1,11 @@
-import Home from "./pages/home";
-import SignUp from './pages/Signup';
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+import Home from "./components/home";
+import Signup from "./components/Signup";
+import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -15,8 +16,10 @@ function App() {
         <Router>
           <AuthProvider>
             <Routes>
-              <Route exact path="/" element={<Dashboard/>}/>
-              <Route path="/signup" element={<SignUp/>}/>
+            <Route path="/" element={<PrivateRoute />}>
+                <Route index element={<Dashboard />} />
+              </Route>
+              <Route path="/signup" element={<Signup/>}/>
               <Route path="/login" element={<Login/>}/>
             </Routes>
           </AuthProvider>
