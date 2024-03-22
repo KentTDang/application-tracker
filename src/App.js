@@ -3,6 +3,9 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import ForgotPassword from "./components/ForgotPassword";
+import UpdateProfile from "./components/UpdateProfile";
+
+
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -17,17 +20,20 @@ function App() {
         <Router>
           <AuthProvider>
             <Routes>
-            <Route path="/" element={<PrivateRoute />}>
+              <Route path="/" element={<PrivateRoute />}>
                 <Route index element={<Dashboard />} />
               </Route>
-              <Route path="/signup" element={<Signup/>}/>
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/forgot-password" element={<ForgotPassword/>}/>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update-profile" element={<PrivateRoute />}>
+                <Route index element={<UpdateProfile />} />
+              </Route>
             </Routes>
           </AuthProvider>
         </Router>
 
-  
+
       </div>
     </Container>
 
