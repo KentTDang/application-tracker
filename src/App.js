@@ -1,9 +1,9 @@
 import Home from "./components/home";
-import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import ForgotPassword from "./components/ForgotPassword";
-import UpdateProfile from "./components/UpdateProfile";
+import Signup from "./components/auth/Signup";
+import Dashboard from "./components/application-tracker/Dashboard";
+import Login from "./components/auth/Login";
+import ForgotPassword from "./components/auth/ForgotPassword";
+import UpdateProfile from "./components/auth/UpdateProfile";
 
 
 import { Container } from "react-bootstrap";
