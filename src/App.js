@@ -5,8 +5,6 @@ import Login from "./components/auth/Login";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import UpdateProfile from "./components/auth/UpdateProfile";
 
-
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
@@ -26,6 +24,7 @@ function App() {
               <Route path="/update-profile" element={<PrivateRoute />}>
                 <Route index element={<UpdateProfile />} />
               </Route>
+              <Route path="/home" element={<Home />} />
             </Routes>
           </AuthProvider>
         </Router>
