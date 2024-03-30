@@ -1,4 +1,3 @@
-import Home from "./components/home";
 import Signup from "./components/auth/Signup";
 import Dashboard from "./components/application-tracker/Dashboard";
 import Login from "./components/auth/Login";
@@ -24,7 +23,6 @@ function App() {
               <Route path="/update-profile" element={<PrivateRoute />}>
                 <Route index element={<UpdateProfile />} />
               </Route>
-              <Route path="/home" element={<Home />} />
             </Routes>
           </AuthProvider>
         </Router>

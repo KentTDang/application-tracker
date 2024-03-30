@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Card, Button, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom"
+import { firestore } from "../../firebase";
+import { addDoc, collection } from "@firebase/firestore";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -9,6 +11,25 @@ export default function Dashboard() {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
   const navigate = useNavigate()
+
+  const jobTitleRef = useRef();
+  const ref = collection(firestore, "job-applications");
+  const handleSave = async (e) => {
+
+    e.preventDefault();
+    console.log(jobTitleRef.current.value);
+
+    let data = {
+      jobTitle: jobTitleRef.current.value,
+    }
+
+    try {
+      addDoc(ref, data);
+    } catch (e) {
+      console.log(e);
+    }
+
+  };
 
   async function handleLogout() {
     setError('')
@@ -27,6 +48,14 @@ export default function Dashboard() {
         Job Application Tracker
       </div>
       <div className="profile-container">
+
+        <div>
+          <form onSubmit={handleSave}>
+            <label>Job Title</label>
+            <input type="text" ref={jobTitleRef} />
+            <button type="submit">Save</button>
+          </form>
+        </div>;
 
       </div>
       <Container className="d-flex align-items-center justify-content-center"
