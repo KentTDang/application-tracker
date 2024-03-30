@@ -1,22 +1,16 @@
-import Home from "./components/home";
-import Signup from "./components/Signup";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
-import ForgotPassword from "./components/ForgotPassword";
-import UpdateProfile from "./components/UpdateProfile";
+import Signup from "./components/auth/Signup";
+import Dashboard from "./components/application-tracker/Dashboard";
+import Login from "./components/auth/Login";
+import ForgotPassword from "./components/auth/ForgotPassword";
+import UpdateProfile from "./components/auth/UpdateProfile";
 
-
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
-    <Container className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}>
-      <div className="w-100" style={{ maxWidth: '400px ' }}>
-
+      <>
         <Router>
           <AuthProvider>
             <Routes>
@@ -32,11 +26,7 @@ function App() {
             </Routes>
           </AuthProvider>
         </Router>
-
-
-      </div>
-    </Container>
-
+      </>
   )
 }
 
