@@ -1,35 +1,53 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, Fragment } from 'react'
 import { Card, Button, Alert, Container } from 'react-bootstrap'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom"
 import { firestore } from "../../firebase";
-import { addDoc, collection } from "@firebase/firestore";
 import "./Dashboard.css";
+import {
+  doc,
+  onSnapshot,
+  addDoc,
+  updateDoc,
+  setDoc,
+  deleteDoc,
+  collection,
+  serverTimestamp,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
+
+
+/**
+ * async fetchDataFromFirestore - Retrieve data from firestore
+ * A query is a request for information
+ * We are requesting a snapshot of information on a document called job-applications from the firestore collection
+ * @returns data
+ */
+async function fetchDataFromFirestore() {
+  const querySnapshot = await getDocs(collection(firestore, "job-applications"))
+
+  const data = [];
+  querySnapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() });
+  });
+  return data;
+}
 
 export default function Dashboard() {
 
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
-  const navigate = useNavigate()
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [jobs, setJobs] = useState([]);
 
   const jobTitleRef = useRef();
-  const ref = collection(firestore, "job-applications");
-  const handleSave = async (e) => {
+  const collectionRef = collection(firestore, "job-applications");
 
-    e.preventDefault();
-    console.log(jobTitleRef.current.value);
-
-    let data = {
-      jobTitle: jobTitleRef.current.value,
-    }
-
-    try {
-      addDoc(ref, data);
-    } catch (e) {
-      console.log(e);
-    }
-
-  };
 
   async function handleLogout() {
     setError('')
@@ -41,6 +59,66 @@ export default function Dashboard() {
       setError("Fail to logout")
     }
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const data = await fetchDataFromFirestore();
+        setJobs(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data from Firestore:', error);
+        setError('Failed to fetch data from Firestore');
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+
+
+
+  // Real Time Get Function
+  // useEffect(() => {
+  //   console.log(collectionRef);
+
+  //   const q = query(
+  //     //Kinda of a filter method, we can use where methods here
+
+  //   );
+
+  //   setLoading(true);
+  //   const unsub = onSnapshot(collectionRef, (querySnapshot) => {
+  //     const items = [];
+  //     querySnapshot.forEach((doc) => {
+  //       items.push(doc.data());
+  //     });
+  //     setJobs(items);
+  //     setLoading(false);
+  //   });
+  //   return () => {
+  //     unsub();
+  //   };
+  // }, []);
+
+  // Add Function 
+  const handleSave = async (e) => {
+
+    e.preventDefault();
+    console.log(jobTitleRef.current.value);
+
+    let data = {
+      jobTitle: jobTitleRef.current.value,
+    }
+
+    try {
+      addDoc(collectionRef, data);
+    } catch (e) {
+      console.log(e);
+    }
+
+  };
 
   return (
     <>
@@ -55,7 +133,20 @@ export default function Dashboard() {
             <input type="text" ref={jobTitleRef} />
             <button type="submit">Save</button>
           </form>
-        </div>;
+        </div>
+
+        <div className="display-container">
+        {loading ? (
+          <h1>Loading...</h1>
+        ) : (
+          jobs.map((job) => (
+            <div key={job.id}>
+              <p>{job.jobTitle}</p>
+              <p>This line is working</p>
+            </div>
+          ))
+        )}
+      </div>
 
       </div>
       <Container className="d-flex align-items-center justify-content-center"
@@ -76,8 +167,6 @@ export default function Dashboard() {
         </div>
 
       </Container >
-
-
     </>
 
   )
