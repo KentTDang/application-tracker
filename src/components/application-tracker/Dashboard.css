@@ -7,3 +7,12 @@ body {
     background-color: #ffffff;
     width: 100%;
 }
+
+.display-container {
+    background-color: #4fc1e9;
+    width:25rem;
+    height: 25rem;
+    p {
+        color: black;
+    }
+}
