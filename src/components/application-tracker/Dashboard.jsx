@@ -20,23 +20,6 @@ import {
   limit,
 } from 'firebase/firestore';
 
-
-/**
- * async fetchDataFromFirestore - Retrieve data from firestore
- * A query is a request for information
- * We are requesting a snapshot of information on a document called job-applications from the firestore collection
- * @returns data
- */
-async function fetchDataFromFirestore() {
-  const querySnapshot = await getDocs(collection(firestore, "job-applications"))
-
-  const data = [];
-  querySnapshot.forEach((doc) => {
-    data.push({ id: doc.id, ...doc.data() });
-  });
-  return data;
-}
-
 export default function Dashboard() {
 
   const [error, setError] = useState("");
@@ -60,11 +43,23 @@ export default function Dashboard() {
     }
   }
 
+  // Real Time Get Function
   useEffect(() => {
-    async function fetchData() {
+    console.log(collectionRef);
+
+    const q = query(
+      //Kinda of a filter method, we can use where methods here
+    );
+
+    setLoading(true);
+    const unsub = onSnapshot(collectionRef, (querySnapshot) => {
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ id: doc.id, ...doc.data() });
+      });
+
       try {
         setLoading(true);
-        const data = await fetchDataFromFirestore();
         setJobs(data);
         setLoading(false);
       } catch (error) {
@@ -72,35 +67,12 @@ export default function Dashboard() {
         setError('Failed to fetch data from Firestore');
         setLoading(false);
       }
-    }
-    fetchData();
+
+    });
+    return () => {
+      unsub();
+    };
   }, []);
-
-
-
-
-  // Real Time Get Function
-  // useEffect(() => {
-  //   console.log(collectionRef);
-
-  //   const q = query(
-  //     //Kinda of a filter method, we can use where methods here
-
-  //   );
-
-  //   setLoading(true);
-  //   const unsub = onSnapshot(collectionRef, (querySnapshot) => {
-  //     const items = [];
-  //     querySnapshot.forEach((doc) => {
-  //       items.push(doc.data());
-  //     });
-  //     setJobs(items);
-  //     setLoading(false);
-  //   });
-  //   return () => {
-  //     unsub();
-  //   };
-  // }, []);
 
   // Add Function 
   const handleSave = async (e) => {
@@ -136,17 +108,17 @@ export default function Dashboard() {
         </div>
 
         <div className="display-container">
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          jobs.map((job) => (
-            <div key={job.id}>
-              <p>{job.jobTitle}</p>
-              <p>This line is working</p>
-            </div>
-          ))
-        )}
-      </div>
+          {loading ? (
+            <h1>Loading...</h1>
+          ) : (
+            jobs.map((job) => (
+              <div key={job.id}>
+                <p>{job.jobTitle}</p>
+                <p>This line is working</p>
+              </div>
+            ))
+          )}
+        </div>
 
       </div>
       <Container className="d-flex align-items-center justify-content-center"
