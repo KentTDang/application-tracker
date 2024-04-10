@@ -5,19 +5,10 @@ import { Link, useNavigate } from "react-router-dom"
 import { firestore } from "../../firebase";
 import "./Dashboard.css";
 import {
-  doc,
   onSnapshot,
   addDoc,
-  updateDoc,
-  setDoc,
-  deleteDoc,
   collection,
-  serverTimestamp,
-  getDocs,
   query,
-  where,
-  orderBy,
-  limit,
 } from 'firebase/firestore';
 
 export default function Dashboard() {
@@ -29,6 +20,7 @@ export default function Dashboard() {
   const [jobs, setJobs] = useState([]);
 
   const jobTitleRef = useRef();
+  const salaryRef = useRef();
   const collectionRef = collection(firestore, "job-applications");
 
 
@@ -82,6 +74,7 @@ export default function Dashboard() {
 
     let data = {
       jobTitle: jobTitleRef.current.value,
+      salary: salaryRef.current.value,
     }
 
     try {
@@ -103,6 +96,7 @@ export default function Dashboard() {
           <form onSubmit={handleSave}>
             <label>Job Title</label>
             <input type="text" ref={jobTitleRef} />
+            <input type="text" ref={salaryRef} />
             <button type="submit">Save</button>
           </form>
         </div>
@@ -112,8 +106,9 @@ export default function Dashboard() {
             <h1>Loading...</h1>
           ) : (
             jobs.map((job) => (
-              <div key={job.id}>
+              <div className="joblist-container" key={job.id}>
                 <p>{job.jobTitle}</p>
+                <p>{job.salary}</p>
                 <p>This line is working</p>
               </div>
             ))

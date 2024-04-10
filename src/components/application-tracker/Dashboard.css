@@ -16,3 +16,12 @@ body {
         color: black;
     }
 }
+
+
+.joblist-container {
+    background-color: black;
+    border-top: 12rem;
+    p {
+        color: white;
+    }
+}
