@@ -17,12 +17,21 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [jobs, setJobs] = useState([]);
 
-  const jobTitleRef = useRef();
-  const salaryRef = useRef();
   const collectionRef = collection(firestore, currentUser.uid);
 
+  // Firebase Document and Fields
+  const [application, setApplication] = useState([]);
+  const companyRef = useRef() // Company
+  const stageRef = useRef() // Stage
+  const jobTitleRef = useRef()  // Position
+  const linkedinNoteRef = useRef() // Linkedin Note
+  const connectionSentRef = useRef() // Number of connections sent
+  const applyDateRef = useRef() // Apply Date
+  const responseDataRef = useRef() // Reponse Date
+  const linkRef = useRef()  // Job URL
+  const referralRef = useRef() // Referall ?
+  const salaryRef = useRef()  // Salary
 
   async function handleLogout() {
     setError('')
@@ -53,7 +62,7 @@ export default function Dashboard() {
 
       try {
         setLoading(true);
-        setJobs(data);
+        setApplication(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data from Firestore:', error);
@@ -71,11 +80,17 @@ export default function Dashboard() {
   const handleSave = async (e) => {
 
     e.preventDefault();
-    console.log(jobTitleRef.current.value);
-
+    
     let data = {
+      company: companyRef.current.value,
+      stage: stageRef.current.value,
       jobTitle: jobTitleRef.current.value,
-      salary: salaryRef.current.value,
+      linkedinNote: linkedinNoteRef.current.value,
+      connectionSent: connectionSentRef.current.value,
+      applyDate: applyDateRef.current.value,
+      responseData: responseDataRef.current.value,
+      referral: referralRef.current.value,
+      salary: salaryRef.current.value
     }
 
     try {
@@ -96,7 +111,14 @@ export default function Dashboard() {
         <div>
           <form onSubmit={handleSave}>
             <label>Job Title</label>
+            <input type="text" ref={companyRef} />
+            <input type="text" ref={stageRef} />
             <input type="text" ref={jobTitleRef} />
+            <input type="text" ref={linkedinNoteRef} />
+            <input type="text" ref={connectionSentRef} />
+            <input type="text" ref={applyDateRef} />
+            <input type="text" ref={responseDataRef} />
+            <input type="text" ref={referralRef} />
             <input type="text" ref={salaryRef} />
             <button type="submit">Save</button>
           </form>
@@ -106,9 +128,16 @@ export default function Dashboard() {
           {loading ? (
             <h1>Loading...</h1>
           ) : (
-            jobs.map((job) => (
+            application.map((job) => (
               <div className="joblist-container" key={job.id}>
+                <p>{job.company}</p>
+                <p>{job.stage}</p>
                 <p>{job.jobTitle}</p>
+                <p>{job.linkedinNote}</p>
+                <p>{job.connectionSent}</p>
+                <p>{job.applyDate}</p>
+                <p>{job.responseData}</p>
+                <p>{job.referral}</p>
                 <p>{job.salary}</p>
                 <p>This line is working</p>
               </div>
