@@ -3,6 +3,7 @@ body {
 }
 
 .header { 
+    display: flex;
     color: #4fc1e9;
     background-color: #ffffff;
     width: 100%;
@@ -24,4 +25,8 @@ body {
     p {
         color: white;
     }
+}
+
+.profile-dialog {
+    background-color: white;
 }

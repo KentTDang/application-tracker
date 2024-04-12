@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom"
 import { firestore } from "../../firebase";
 import "./Dashboard.css";
+import Popup from 'reactjs-popup';
 import {
   onSnapshot,
   addDoc,
@@ -11,7 +12,11 @@ import {
   query,
 } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
+import {
+  faRightFromBracket,
+  faUser
+
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Dashboard() {
 
@@ -109,14 +114,17 @@ export default function Dashboard() {
         Job Application Tracker
 
         <div className="profilie-container">
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
+          <Popup trigger={<button><FontAwesomeIcon icon={faUser} /></button>}>
+            <div className="profile-dialog">
+            <h2 className="text-center mb-4">Profile</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <strong>Email:</strong> {currentUser.email}
+            <button variant="link" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
+            </div>
+          </Popup>
         </div>
-        <button variant="link" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
-
       </div>
-      <div className="profile-container">
+
 
         <div>
           <form onSubmit={handleSave}>
@@ -155,7 +163,6 @@ export default function Dashboard() {
           )}
         </div>
 
-      </div>
 
     </>
 
