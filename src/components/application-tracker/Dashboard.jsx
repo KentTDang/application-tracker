@@ -4,21 +4,19 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom"
 import { firestore } from "../../firebase";
 import "./Dashboard.css";
+import Popup from 'reactjs-popup';
 import {
-  doc,
   onSnapshot,
   addDoc,
-  updateDoc,
-  setDoc,
-  deleteDoc,
   collection,
-  serverTimestamp,
-  getDocs,
   query,
-  where,
-  orderBy,
-  limit,
 } from 'firebase/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faRightFromBracket,
+  faUser
+
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function Dashboard() {
 
@@ -26,11 +24,21 @@ export default function Dashboard() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [jobs, setJobs] = useState([]);
 
-  const jobTitleRef = useRef();
-  const collectionRef = collection(firestore, "job-applications");
+  const collectionRef = collection(firestore, currentUser.uid);
 
+  // Firebase Document and Fields
+  const [application, setApplication] = useState([]);
+  const companyRef = useRef() // Company
+  const stageRef = useRef() // Stage
+  const jobTitleRef = useRef()  // Position
+  const linkedinNoteRef = useRef() // Linkedin Note
+  const connectionSentRef = useRef() // Number of connections sent
+  const applyDateRef = useRef() // Apply Date
+  const responseDataRef = useRef() // Reponse Date
+  const linkRef = useRef()  // Job URL
+  const referralRef = useRef() // Referall ?
+  const salaryRef = useRef()  // Salary
 
   async function handleLogout() {
     setError('')
@@ -46,6 +54,7 @@ export default function Dashboard() {
   // Real Time Get Function
   useEffect(() => {
     console.log(collectionRef);
+    console.log(currentUser)
 
     const q = query(
       //Kinda of a filter method, we can use where methods here
@@ -60,7 +69,7 @@ export default function Dashboard() {
 
       try {
         setLoading(true);
-        setJobs(data);
+        setApplication(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data from Firestore:', error);
@@ -78,10 +87,17 @@ export default function Dashboard() {
   const handleSave = async (e) => {
 
     e.preventDefault();
-    console.log(jobTitleRef.current.value);
 
     let data = {
+      company: companyRef.current.value,
+      stage: stageRef.current.value,
       jobTitle: jobTitleRef.current.value,
+      linkedinNote: linkedinNoteRef.current.value,
+      connectionSent: connectionSentRef.current.value,
+      applyDate: applyDateRef.current.value,
+      responseData: responseDataRef.current.value,
+      referral: referralRef.current.value,
+      salary: salaryRef.current.value
     }
 
     try {
@@ -96,13 +112,32 @@ export default function Dashboard() {
     <>
       <div className="header">
         Job Application Tracker
+
+        <div className="profilie-container">
+          <Popup trigger={<button><FontAwesomeIcon icon={faUser} /></button>}>
+            <div className="profile-dialog">
+            <h2 className="text-center mb-4">Profile</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <strong>Email:</strong> {currentUser.email}
+            <button variant="link" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
+            </div>
+          </Popup>
+        </div>
       </div>
-      <div className="profile-container">
+
 
         <div>
           <form onSubmit={handleSave}>
             <label>Job Title</label>
+            <input type="text" ref={companyRef} />
+            <input type="text" ref={stageRef} />
             <input type="text" ref={jobTitleRef} />
+            <input type="text" ref={linkedinNoteRef} />
+            <input type="text" ref={connectionSentRef} />
+            <input type="text" ref={applyDateRef} />
+            <input type="text" ref={responseDataRef} />
+            <input type="text" ref={referralRef} />
+            <input type="text" ref={salaryRef} />
             <button type="submit">Save</button>
           </form>
         </div>
@@ -111,34 +146,24 @@ export default function Dashboard() {
           {loading ? (
             <h1>Loading...</h1>
           ) : (
-            jobs.map((job) => (
-              <div key={job.id}>
+            application.map((job) => (
+              <div className="joblist-container" key={job.id}>
+                <p>{job.company}</p>
+                <p>{job.stage}</p>
                 <p>{job.jobTitle}</p>
+                <p>{job.linkedinNote}</p>
+                <p>{job.connectionSent}</p>
+                <p>{job.applyDate}</p>
+                <p>{job.responseData}</p>
+                <p>{job.referral}</p>
+                <p>{job.salary}</p>
                 <p>This line is working</p>
               </div>
             ))
           )}
         </div>
 
-      </div>
-      <Container className="d-flex align-items-center justify-content-center"
 
-        style={{ minHeight: "100vh" }}>
-        <div className="profile-container">
-          <Card >
-            <Card.Body>
-              <h2 className="text-center mb-4">Profile</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <strong>Email:</strong> {currentUser.email}
-              <Link to='/update-profile' className="btn btn-primary w-100 mt-3">Update Profile</Link>
-            </Card.Body>
-          </Card>
-          <div className="w-100 text-center mt-2">
-            <Button variant="link" onClick={handleLogout}>Log Out</Button>
-          </div>
-        </div>
-
-      </Container >
     </>
 
   )

@@ -3,6 +3,7 @@ body {
 }
 
 .header { 
+    display: flex;
     color: #4fc1e9;
     background-color: #ffffff;
     width: 100%;
@@ -15,4 +16,17 @@ body {
     p {
         color: black;
     }
+}
+
+
+.joblist-container {
+    background-color: black;
+    border-top: 12rem;
+    p {
+        color: white;
+    }
+}
+
+.profile-dialog {
+    background-color: white;
 }
