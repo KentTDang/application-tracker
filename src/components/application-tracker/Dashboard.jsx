@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   const jobTitleRef = useRef();
   const salaryRef = useRef();
-  const collectionRef = collection(firestore, "job-applications");
+  const collectionRef = collection(firestore, currentUser.uid);
 
 
   async function handleLogout() {
@@ -38,6 +38,7 @@ export default function Dashboard() {
   // Real Time Get Function
   useEffect(() => {
     console.log(collectionRef);
+    console.log(currentUser)
 
     const q = query(
       //Kinda of a filter method, we can use where methods here
