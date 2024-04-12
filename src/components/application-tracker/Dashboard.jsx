@@ -10,6 +10,8 @@ import {
   collection,
   query,
 } from 'firebase/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 
 export default function Dashboard() {
 
@@ -105,13 +107,14 @@ export default function Dashboard() {
     <>
       <div className="header">
         Job Application Tracker
-        
-        <div className="logout-container">
+
+        <div className="profilie-container">
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
-          <button variant="link" onClick={handleLogout}>Log Out</button>
         </div>
+        <button variant="link" onClick={handleLogout}><FontAwesomeIcon icon={faRightFromBracket} /></button>
+
       </div>
       <div className="profile-container">
 
