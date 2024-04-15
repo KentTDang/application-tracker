@@ -8,7 +8,9 @@ import Popup from 'reactjs-popup';
 import {
   onSnapshot,
   addDoc,
+  deleteDoc,
   collection,
+  doc,
   query,
 } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -108,6 +110,13 @@ export default function Dashboard() {
 
   };
 
+  // Delete Function 
+  const deleteJobApplication = async (id) => {
+    const jobApplicationDoc = doc(firestore, currentUser.uid, id)
+    await deleteDoc(jobApplicationDoc)
+  }
+
+
   return (
     <>
       <div className="header">
@@ -157,7 +166,7 @@ export default function Dashboard() {
                 <p>{job.responseData}</p>
                 <p>{job.referral}</p>
                 <p>{job.salary}</p>
-                <p>This line is working</p>
+                <button className="trash-button" onClick={() => deleteJobApplication(job.id)}>Delete</button>
               </div>
             ))
           )}
