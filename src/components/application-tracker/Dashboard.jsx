@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
-import { update } from "firebase/database";
+import { DataGrid } from '@mui/x-data-grid';
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -42,6 +42,7 @@ export default function Dashboard() {
   const [referral, setReferral] = useState(""); // Referral ?
   const [salary, setSalary] = useState(""); // Salary
 
+  const [rows, setRows] = useState([])
   // Logout Function
   async function handleLogout() {
     setError("");
@@ -60,6 +61,7 @@ export default function Dashboard() {
       const db = await getDocs(collectionRef);
       setApplication(db.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
+    setRows(application)
     getData();
   });
 
@@ -144,6 +146,48 @@ export default function Dashboard() {
     setSalary('');
   };
 
+  const columns = [
+    // { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'company', headerName: 'Company', width: 130 },
+    { field: 'stage', headerName: 'Stage', width: 130 },
+    { field: 'jobTitle', headerName: 'Job Title', width: 130 },
+    { field: 'linkedinNote', headerName: 'LinkIn Note', width: 130 },
+    { field: 'connectionSent', headerName: 'Connection Sent', width: 130 },
+    { field: 'applyeDate', headerName: 'Apply Date', width: 130 },
+    { field: 'responseDate', headerName: 'Response Date', width: 130 },
+    { field: 'link', headerName: 'Link', width: 130 },
+    { field: 'referral', headerName: 'Referral', width: 130 },
+    { field: 'salary', headerName: 'Salary', width: 130 },
+
+    // {
+    //   field: 'age',
+    //   headerName: 'Age',
+    //   type: 'number',
+    //   width: 90,
+    // },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    // },
+  ];
+
+  // const rows = [
+  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  // ];
+  
+
   return (
     <>
       <div className="header">
@@ -167,6 +211,20 @@ export default function Dashboard() {
           </Popup>
         </div>
       </div>
+
+      <div style={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 5 },
+          },
+        }}
+        pageSizeOptions={[5, 10]}
+        checkboxSelection
+      />
+    </div>
 
       <div>
         <form>
