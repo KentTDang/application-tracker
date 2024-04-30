@@ -3,28 +3,28 @@ import { Card, Button, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { firestore } from "../../firebase";
-import "./Dashboard.css";
+import "../../styles/Dashboard.css";
 import Popup from "reactjs-popup";
 import {
-  onSnapshot,
   addDoc,
-  updateDoc,
-  deleteDoc,
   collection,
-  doc,
-  getDocs,
-  query,
 } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
-import { update } from "firebase/database";
+
+import GetApplication from "../../cloud-functions/GetApplication";
+import ApplicationTable from "../../cloud-functions/ApplicationTable";
+import ApplicationForm from "../../cloud-functions/ApplicationForm";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
+  // New Code
   const { currentUser, logout } = useAuth();
+  const applications = GetApplication(currentUser.uid);
+
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [id, setId] = useState("");
+
   const [show, setShow] = useState(false);
 
   const collectionRef = collection(firestore, currentUser.uid);
@@ -54,15 +54,6 @@ export default function Dashboard() {
     }
   }
 
-  // Real Time Get Function
-  useEffect(() => {
-    const getData = async () => {
-      const db = await getDocs(collectionRef);
-      setApplication(db.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getData();
-  });
-
   // Create Function
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -80,69 +71,69 @@ export default function Dashboard() {
     };
     await addDoc(collectionRef, data);
   };
+  // // Delete Function
+  // const handleDelete = async (id) => {
+  //   const jobApplicationDoc = doc(firestore, currentUser.uid, id);
+  //   await deleteDoc(jobApplicationDoc);
+  // };
 
-  // Delete Function
-  const handleDelete = async (id) => {
-    const jobApplicationDoc = doc(firestore, currentUser.uid, id);
-    await deleteDoc(jobApplicationDoc);
-  };
+  // // Edit Function
+  // const handleEdit = async (
+  //   id,
+  //   companyRef,
+  //   stageRef,
+  //   jobTitleRef,
+  //   linkedinNoteRef,
+  //   connectionSentRef,
+  //   applyDateRef,
+  //   responseDateRef,
+  //   referralRef,
+  //   salaryRef
+  // ) => {
+  //   setCompany(companyRef);
+  //   setStage(stageRef);
+  //   setJobTitle(jobTitleRef);
+  //   setLinkedinNote(linkedinNoteRef);
+  //   setConnectionSent(connectionSentRef);
+  //   setApplyDate(applyDateRef);
+  //   setResponseDate(responseDateRef);
+  //   setReferral(referralRef);
+  //   setSalary(salaryRef);
+  //   setId(id);
+  //   setShow(true);
+  // };
 
-  // Edit Function
-  const handleEdit = async (
-    id,
-    companyRef,
-    stageRef,
-    jobTitleRef,
-    linkedinNoteRef,
-    connectionSentRef,
-    applyDateRef,
-    responseDateRef,
-    referralRef,
-    salaryRef
-  ) => {
-    setCompany(companyRef);
-    setStage(stageRef);
-    setJobTitle(jobTitleRef);
-    setLinkedinNote(linkedinNoteRef);
-    setConnectionSent(connectionSentRef);
-    setApplyDate(applyDateRef);
-    setResponseDate(responseDateRef);
-    setReferral(referralRef);
-    setSalary(salaryRef);
-    setId(id);
-    setShow(true);
-  };
-
-  // Update Function
-  const handleUpdate = async (e) => {
-    e.preventDefault()
+  // // Update Function
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault()
     
-    const updateData = doc(firestore, currentUser.uid, id);
+  //   const updateData = doc(firestore, currentUser.uid, id);
 
-    let data = {
-      company: company,
-      stage: stage,
-      jobTitle: jobTitle,
-      linkedinNote: linkedinNote,
-      connectionSent: connectionSent,
-      applyDate: applyDate,
-      responseDate: responseDate,
-      referral: referral,
-      salary: salary,
-    };
+  //   let data = {
+  //     company: company,
+  //     stage: stage,
+  //     jobTitle: jobTitle,
+  //     linkedinNote: linkedinNote,
+  //     connectionSent: connectionSent,
+  //     applyDate: applyDate,
+  //     responseDate: responseDate,
+  //     referral: referral,
+  //     salary: salary,
+  //   };
 
-    await updateDoc(updateData, data);
-    setShow(false)
-    setCompany('');
-    setStage('');
-    setJobTitle('');
-    setLinkedinNote('');
-    setConnectionSent('');
-    setApplyDate('');
-    setResponseDate('');
-    setReferral('');
-    setSalary('');
-  };
+  //   await updateDoc(updateData, data);
+  //   setShow(false)
+  //   setCompany('');
+  //   setStage('');
+  //   setJobTitle('');
+  //   setLinkedinNote('');
+  //   setConnectionSent('');
+  //   setApplyDate('');
+  //   setResponseDate('');
+  //   setReferral('');
+  //   setSalary('');
+  // };
+
 
   return (
     <>
@@ -168,109 +159,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div>
-        <form>
-          <label>Job Title</label>
-          <input
-            type="text"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
 
-          <input
-            type="text"
-            value={stage}
-            onChange={(e) => setStage(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={linkedinNote}
-            onChange={(e) => setLinkedinNote(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={connectionSent}
-            onChange={(e) => setConnectionSent(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={applyDate}
-            onChange={(e) => setApplyDate(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={responseDate}
-            onChange={(e) => setResponseDate(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={referral}
-            onChange={(e) => setReferral(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-          />
-
-          {!show ? (
-            <button onClick={handleCreate}>Create</button>
-          ) : (
-            <button onClick={handleUpdate}>Update</button>
-          )}
-        </form>
-      </div>
-
-      {application.map((job) => (
-        <div>
-          <p>{job.company}</p>
-          <p>{job.stage}</p>
-          <p>{job.jobTitle}</p>
-          <p>{job.linkedinNote}</p>
-          <p>{job.connectionSent}</p>
-          <p>{job.applyDate}</p>
-          <p>{job.responseDate}</p>
-          <p>{job.referral}</p>
-          <p>{job.salary}</p>
-          <button onClick={() => handleDelete(job.id)}>Delete</button>
-          <button
-            onClick={() =>
-              handleEdit(
-                job.id,
-                job.company,
-                job.stage,
-                job.jobTitle,
-                job.linkedinNote,
-                job.connectionSent,
-                job.applyDate,
-                job.responseDate,
-                job.referral,
-                job.salary
-              )
-            }
-          >
-            Edit
-          </button>
-        </div>
-      ))}
+      <ApplicationTable applications={applications} />
+      <ApplicationForm collectionRef={collectionRef}/>
     </>
   );
 }
