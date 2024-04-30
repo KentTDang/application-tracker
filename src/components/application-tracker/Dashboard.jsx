@@ -18,6 +18,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import { DataGrid } from '@mui/x-data-grid';
+import CreateApplication from "../../cloud-functions/CreateApplication";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -329,6 +330,8 @@ export default function Dashboard() {
           </button>
         </div>
       ))}
+
+      <CreateApplication/>
     </>
   );
 }
