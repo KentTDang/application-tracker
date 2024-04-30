@@ -6,26 +6,25 @@ import { firestore } from "../../firebase";
 import "./Dashboard.css";
 import Popup from "reactjs-popup";
 import {
-  onSnapshot,
   addDoc,
-  updateDoc,
-  deleteDoc,
   collection,
-  doc,
-  getDocs,
-  query,
 } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
-import { DataGrid } from '@mui/x-data-grid';
-import CreateApplication from "../../cloud-functions/CreateApplication";
+
+import GetApplication from "../../cloud-functions/GetApplication";
+import ApplicationTable from "../../cloud-functions/ApplicationTable";
+import ApplicationForm from "../../cloud-functions/ApplicationForm";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
+  // New Code
   const { currentUser, logout } = useAuth();
+  const applications = GetApplication(currentUser.uid);
+
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [id, setId] = useState("");
+
   const [show, setShow] = useState(false);
 
   const collectionRef = collection(firestore, currentUser.uid);
@@ -43,7 +42,6 @@ export default function Dashboard() {
   const [referral, setReferral] = useState(""); // Referral ?
   const [salary, setSalary] = useState(""); // Salary
 
-  const [rows, setRows] = useState([])
   // Logout Function
   async function handleLogout() {
     setError("");
@@ -55,16 +53,6 @@ export default function Dashboard() {
       setError("Fail to logout");
     }
   }
-
-  // Real Time Get Function
-  useEffect(() => {
-    const getData = async () => {
-      const db = await getDocs(collectionRef);
-      setApplication(db.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    setRows(application)
-    getData();
-  });
 
   // Create Function
   const handleCreate = async (e) => {
@@ -83,111 +71,69 @@ export default function Dashboard() {
     };
     await addDoc(collectionRef, data);
   };
+  // // Delete Function
+  // const handleDelete = async (id) => {
+  //   const jobApplicationDoc = doc(firestore, currentUser.uid, id);
+  //   await deleteDoc(jobApplicationDoc);
+  // };
 
-  // Delete Function
-  const handleDelete = async (id) => {
-    const jobApplicationDoc = doc(firestore, currentUser.uid, id);
-    await deleteDoc(jobApplicationDoc);
-  };
+  // // Edit Function
+  // const handleEdit = async (
+  //   id,
+  //   companyRef,
+  //   stageRef,
+  //   jobTitleRef,
+  //   linkedinNoteRef,
+  //   connectionSentRef,
+  //   applyDateRef,
+  //   responseDateRef,
+  //   referralRef,
+  //   salaryRef
+  // ) => {
+  //   setCompany(companyRef);
+  //   setStage(stageRef);
+  //   setJobTitle(jobTitleRef);
+  //   setLinkedinNote(linkedinNoteRef);
+  //   setConnectionSent(connectionSentRef);
+  //   setApplyDate(applyDateRef);
+  //   setResponseDate(responseDateRef);
+  //   setReferral(referralRef);
+  //   setSalary(salaryRef);
+  //   setId(id);
+  //   setShow(true);
+  // };
 
-  // Edit Function
-  const handleEdit = async (
-    id,
-    companyRef,
-    stageRef,
-    jobTitleRef,
-    linkedinNoteRef,
-    connectionSentRef,
-    applyDateRef,
-    responseDateRef,
-    referralRef,
-    salaryRef
-  ) => {
-    setCompany(companyRef);
-    setStage(stageRef);
-    setJobTitle(jobTitleRef);
-    setLinkedinNote(linkedinNoteRef);
-    setConnectionSent(connectionSentRef);
-    setApplyDate(applyDateRef);
-    setResponseDate(responseDateRef);
-    setReferral(referralRef);
-    setSalary(salaryRef);
-    setId(id);
-    setShow(true);
-  };
-
-  // Update Function
-  const handleUpdate = async (e) => {
-    e.preventDefault()
+  // // Update Function
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault()
     
-    const updateData = doc(firestore, currentUser.uid, id);
+  //   const updateData = doc(firestore, currentUser.uid, id);
 
-    let data = {
-      company: company,
-      stage: stage,
-      jobTitle: jobTitle,
-      linkedinNote: linkedinNote,
-      connectionSent: connectionSent,
-      applyDate: applyDate,
-      responseDate: responseDate,
-      referral: referral,
-      salary: salary,
-    };
+  //   let data = {
+  //     company: company,
+  //     stage: stage,
+  //     jobTitle: jobTitle,
+  //     linkedinNote: linkedinNote,
+  //     connectionSent: connectionSent,
+  //     applyDate: applyDate,
+  //     responseDate: responseDate,
+  //     referral: referral,
+  //     salary: salary,
+  //   };
 
-    await updateDoc(updateData, data);
-    setShow(false)
-    setCompany('');
-    setStage('');
-    setJobTitle('');
-    setLinkedinNote('');
-    setConnectionSent('');
-    setApplyDate('');
-    setResponseDate('');
-    setReferral('');
-    setSalary('');
-  };
+  //   await updateDoc(updateData, data);
+  //   setShow(false)
+  //   setCompany('');
+  //   setStage('');
+  //   setJobTitle('');
+  //   setLinkedinNote('');
+  //   setConnectionSent('');
+  //   setApplyDate('');
+  //   setResponseDate('');
+  //   setReferral('');
+  //   setSalary('');
+  // };
 
-  const columns = [
-    // { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'company', headerName: 'Company', width: 130 },
-    { field: 'stage', headerName: 'Stage', width: 130 },
-    { field: 'jobTitle', headerName: 'Job Title', width: 130 },
-    { field: 'linkedinNote', headerName: 'LinkIn Note', width: 130 },
-    { field: 'connectionSent', headerName: 'Connection Sent', width: 130 },
-    { field: 'applyeDate', headerName: 'Apply Date', width: 130 },
-    { field: 'responseDate', headerName: 'Response Date', width: 130 },
-    { field: 'link', headerName: 'Link', width: 130 },
-    { field: 'referral', headerName: 'Referral', width: 130 },
-    { field: 'salary', headerName: 'Salary', width: 130 },
-
-    // {
-    //   field: 'age',
-    //   headerName: 'Age',
-    //   type: 'number',
-    //   width: 90,
-    // },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-    // },
-  ];
-
-  // const rows = [
-  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  //   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  // ];
-  
 
   return (
     <>
@@ -213,125 +159,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
-    </div>
 
-      <div>
-        <form>
-          <label>Job Title</label>
-          <input
-            type="text"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={stage}
-            onChange={(e) => setStage(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={linkedinNote}
-            onChange={(e) => setLinkedinNote(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={connectionSent}
-            onChange={(e) => setConnectionSent(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={applyDate}
-            onChange={(e) => setApplyDate(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={responseDate}
-            onChange={(e) => setResponseDate(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={referral}
-            onChange={(e) => setReferral(e.target.value)}
-          />
-
-          <input
-            type="text"
-            value={salary}
-            onChange={(e) => setSalary(e.target.value)}
-          />
-
-          {!show ? (
-            <button onClick={handleCreate}>Create</button>
-          ) : (
-            <button onClick={handleUpdate}>Update</button>
-          )}
-        </form>
-      </div>
-
-      {application.map((job) => (
-        <div>
-          <p>{job.company}</p>
-          <p>{job.stage}</p>
-          <p>{job.jobTitle}</p>
-          <p>{job.linkedinNote}</p>
-          <p>{job.connectionSent}</p>
-          <p>{job.applyDate}</p>
-          <p>{job.responseDate}</p>
-          <p>{job.referral}</p>
-          <p>{job.salary}</p>
-          <button onClick={() => handleDelete(job.id)}>Delete</button>
-          <button
-            onClick={() =>
-              handleEdit(
-                job.id,
-                job.company,
-                job.stage,
-                job.jobTitle,
-                job.linkedinNote,
-                job.connectionSent,
-                job.applyDate,
-                job.responseDate,
-                job.referral,
-                job.salary
-              )
-            }
-          >
-            Edit
-          </button>
-        </div>
-      ))}
-
-      <CreateApplication/>
+      <ApplicationTable applications={applications} />
+      <ApplicationForm collectionRef={collectionRef}/>
     </>
   );
 }
