@@ -3,7 +3,7 @@ import { Card, Button, Alert, Container } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { firestore } from "../../firebase";
-import "./Dashboard.css";
+import "../../styles/Dashboard.css";
 import Popup from "reactjs-popup";
 import {
   addDoc,
