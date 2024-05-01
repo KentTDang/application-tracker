@@ -26,10 +26,9 @@ import { firestore } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 
 
-export default function ApplicationTable({ applications }) {
+export default function ApplicationTable({ applications, uid }) {
 
   const [rows, setRows] = useState([])
-  const currentUser = useAuth().currentUser;
   
   useEffect(() => {
     setRows(applications)
@@ -40,7 +39,7 @@ export default function ApplicationTable({ applications }) {
 
     const batch = writeBatch(firestore)
     selectedIds.forEach((id) => {
-      const jobApplicationDoc = doc(firestore, currentUser.uid, id);
+      const jobApplicationDoc = doc(firestore, uid, id);
       batch.delete(jobApplicationDoc)
     })
 

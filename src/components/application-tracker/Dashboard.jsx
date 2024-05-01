@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { firestore } from "../../firebase";
 import "../../styles/Dashboard.css";
 import { collection } from "firebase/firestore";
-
+import { lazy } from 'react';
 
 import useFirebaseData from "../../cloud-functions/useFirebaseData";
-import ApplicationTable from "../../cloud-functions/ApplicationTable";
+
 import ApplicationForm from "../../cloud-functions/ApplicationForm";
 import Banner from "./Banner";
+const ApplicationTable = lazy(() => import("../../cloud-functions/ApplicationTable"));
 
 export default function Dashboard() {
 
   const currentUser = useAuth().currentUser;
   const applications = useFirebaseData(currentUser.uid);
   const collectionRef = collection(firestore, currentUser.uid);
-  
+
   // // Edit Function
   // const handleEdit = async (
   //   id,
@@ -77,7 +78,9 @@ export default function Dashboard() {
   return (
     <>
       <Banner />
-      <ApplicationTable applications={applications} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ApplicationTable applications={applications} uid={currentUser.uid} />
+      </Suspense>
       <ApplicationForm collectionRef={collectionRef}/>
     </>
   );
