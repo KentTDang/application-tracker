@@ -30,6 +30,11 @@ export default function ApplicationTable({ applications }) {
 
   const [rows, setRows] = useState([])
   const currentUser = useAuth().currentUser;
+  
+  useEffect(() => {
+    setRows(applications)
+    console.log("Setting Rows to Applications" + rows)
+  }, [applications])
 
   const handleDelete = async (selectedIds) => {
 
@@ -47,10 +52,6 @@ export default function ApplicationTable({ applications }) {
 
   };
   
-  useEffect(() => {
-    setRows(applications)
-  }, [applications])
-
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
