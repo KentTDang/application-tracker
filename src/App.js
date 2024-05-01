@@ -7,6 +7,7 @@ import UpdateProfile from "./components/auth/UpdateProfile";
 import { AuthProvider } from "../src/contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
+import './App.css'
 
 function App() {
   return (
