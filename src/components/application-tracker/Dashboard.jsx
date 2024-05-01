@@ -2,13 +2,10 @@ import React from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { firestore } from "../../firebase";
 import "../../styles/Dashboard.css";
-import {
-  addDoc,
-  collection,
-} from "firebase/firestore";
+import { collection } from "firebase/firestore";
 
 
-import GetApplication from "../../cloud-functions/GetApplication";
+import useFirebaseData from "../../cloud-functions/useFirebaseData";
 import ApplicationTable from "../../cloud-functions/ApplicationTable";
 import ApplicationForm from "../../cloud-functions/ApplicationForm";
 import Banner from "./Banner";
@@ -16,16 +13,8 @@ import Banner from "./Banner";
 export default function Dashboard() {
 
   const currentUser = useAuth().currentUser;
-  const applications = GetApplication(currentUser.uid);
+  const applications = useFirebaseData(currentUser.uid);
   const collectionRef = collection(firestore, currentUser.uid);
-
-
- 
-  // // Delete Function
-  // const handleDelete = async (id) => {
-  //   const jobApplicationDoc = doc(firestore, currentUser.uid, id);
-  //   await deleteDoc(jobApplicationDoc);
-  // };
 
   // // Edit Function
   // const handleEdit = async (

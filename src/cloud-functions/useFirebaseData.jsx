@@ -2,7 +2,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { useEffect, useState } from 'react'
 import { firestore } from '../firebase';
 
-export default function GetApplication(uid) {
+export default function useFirebaseData(uid) {
 
     const [data, setData] = useState([])
 
