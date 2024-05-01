@@ -21,10 +21,31 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { writeBatch, doc } from "firebase/firestore";
+import { firestore } from "../firebase";
+import { useAuth } from "../contexts/AuthContext";
+
 
 export default function ApplicationTable({ applications }) {
 
   const [rows, setRows] = useState([])
+  const currentUser = useAuth().currentUser;
+
+  const handleDelete = async (selectedIds) => {
+
+    const batch = writeBatch(firestore)
+    selectedIds.forEach((id) => {
+      const jobApplicationDoc = doc(firestore, currentUser.uid, id);
+      batch.delete(jobApplicationDoc)
+    })
+
+    try {
+      await batch.commit()
+    } catch(error) {
+      console.log("Error performing batch delete: " + error)
+    }
+
+  };
   
   useEffect(() => {
     setRows(applications)
@@ -213,7 +234,7 @@ export default function ApplicationTable({ applications }) {
   
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton>
+            <IconButton onClick={() => handleDelete(selected)}>
               <DeleteIcon />
             </IconButton>
           </Tooltip>
