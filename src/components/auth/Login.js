@@ -1,30 +1,41 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
 import { useAuth } from './AuthContext';
 import { Link, useNavigate } from "react-router-dom"
 
 export default function Login() {
-
-    const emailRef = useRef();
-    const passwordRef = useRef();
     const { login } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
 
+    /**
+     * Form submit handler to process a user login request.
+     * 
+     * TODO: Switch to TypeScript 😛
+     * 
+     * @param {FormEvent<HTMLFormElement>} e 
+     */
     async function handleSubmit(e) {
-        e.preventDefault()
+        // Prevent form from submitting an action
+        e.preventDefault();
+        // Reset any errors and set state to inform user that application is processing their request to login
+        setError("");
+        setLoading(true);
+
+        // Get data from from
+        const data = new FormData(e.currentTarget);
+        const email = data.get("email"); // Note: the "name" attribute matches the value provided here
+        const password = data.get("password");
 
         try {
-            setError("")
-            setLoading(true)
-            await login(emailRef.current.value, passwordRef.current.value)
+            await login(email, password);
             navigate("/")
         } catch {
             setError("Failed to log in")
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false)
     }
 
     return (
@@ -39,11 +50,11 @@ export default function Login() {
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group id="email">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" ref={emailRef} required></Form.Control>
+                                    <Form.Control name="email" type="email" required></Form.Control>
                                 </Form.Group>
                                 <Form.Group id="password">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" ref={passwordRef} required></Form.Control>
+                                    <Form.Control name="password" type="password" required></Form.Control>
                                 </Form.Group>
                                 <Button disabled={loading} className="w-100 mt-4" type="submit">Login</Button>
                             </Form>
