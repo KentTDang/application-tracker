@@ -4,7 +4,7 @@ import Login from "./components/auth/Login";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import UpdateProfile from "./components/auth/UpdateProfile";
 
-import { AuthProvider } from "../src/contexts/AuthContext";
+import { AuthProvider } from "./components/auth/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import './App.css'

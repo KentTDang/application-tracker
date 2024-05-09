@@ -23,23 +23,23 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { writeBatch, doc } from "firebase/firestore";
 import { firestore } from "../firebase";
-import { useAuth } from "../contexts/AuthContext";
 
 
-export default function ApplicationTable({ applications, uid }) {
+export default function ApplicationTable({ applications, currentUser}) {
 
   const [rows, setRows] = useState([])
   
   useEffect(() => {
     setRows(applications)
     console.log("Setting Rows to Applications" + rows)
+    console.log("Applications updated", applications);
   }, [applications])
 
   const handleDelete = async (selectedIds) => {
 
     const batch = writeBatch(firestore)
     selectedIds.forEach((id) => {
-      const jobApplicationDoc = doc(firestore, uid, id);
+      const jobApplicationDoc = doc(firestore, currentUser.uid, id);
       batch.delete(jobApplicationDoc)
     })
 
@@ -320,7 +320,7 @@ export default function ApplicationTable({ applications, uid }) {
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage,
         ),
-      [order, orderBy, page, rowsPerPage],
+      [order, orderBy, page, rowsPerPage, rows],
     );
   
     return (
@@ -399,14 +399,14 @@ export default function ApplicationTable({ applications, uid }) {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, 100]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          /> 
         </Paper>
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}
