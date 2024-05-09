@@ -1,19 +1,29 @@
-import { collection, getDocs } from 'firebase/firestore';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { collection, onSnapshot } from 'firebase/firestore';
 import { firestore } from '../firebase';
 
-export default function useFirebaseData(uid) {
-
-    const [data, setData] = useState([])
+export default function useFirebaseData(currentUser) {
+    const [data, setData] = useState([]);
 
     useEffect(() => {
-        const collectionRef = collection(firestore, uid)
-        const getData = async () => {
-          const db = await getDocs(collectionRef);
-          setData(db.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        };
-        getData()
-      }, [uid]);
+        if (!currentUser) return;
+        
+        const collectionRef = collection(firestore, currentUser.uid);
 
-  return data;
+        const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
+            const updatedData = snapshot.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }));
+            setData(updatedData);
+        }, (error) => {
+            console.error("Error fetching data: ", error);
+        });
+
+        // Cleanup function to unsubscribe from the listener when the component unmounts
+        return () => unsubscribe();
+
+    }, [currentUser]);  // Dependency on currentUser to reset if it changes
+
+    return data;
 }
