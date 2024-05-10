@@ -45,6 +45,7 @@ export default function ApplicationTable({ applications, currentUser}) {
 
     try {
       await batch.commit()
+      setSelected([])
     } catch(error) {
       console.log("Error performing batch delete: " + error)
     }
