@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { firestore } from "../../firebase";
 import "../../styles/Dashboard.css";
@@ -14,6 +14,7 @@ export default function Dashboard() {
   const currentUser = useAuth().currentUser;
   const applications = useFirebaseData(currentUser);
   const collectionRef = collection(firestore, currentUser.uid);
+
 
   return (
     <>
