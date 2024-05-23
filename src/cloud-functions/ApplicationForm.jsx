@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { addDoc } from "firebase/firestore";
+import Modal from 'react-modal';
 
 export default function ApplicationForm({ collectionRef }) {
   const [company, setCompany] = useState(""); // Company
@@ -12,6 +13,20 @@ export default function ApplicationForm({ collectionRef }) {
   const [link, setLink] = useState(""); // Job URL
   const [referral, setReferral] = useState(""); // Referral ?
   const [salary, setSalary] = useState(""); // Salary
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function openModal() {
+    console.log("Open");
+    setModalIsOpen(true);
+    console.log(modalIsOpen);
+  }
+
+  function closeModal() {
+    console.log("Close");
+    setModalIsOpen(false);
+    console.log(modalIsOpen);
+  }
 
   // Create Function
   const handleCreate = async (e) => {
@@ -32,74 +47,81 @@ export default function ApplicationForm({ collectionRef }) {
   };
 
   return (
-    <form>
-      <label>Job Title</label>
-      <input
-        type="text"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-      />
+    <>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <form>
+          <label>Job Title</label>
+          <input
+            type="text"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={stage}
-        onChange={(e) => setStage(e.target.value)}
-      />
+          <input
+            type="text"
+            value={stage}
+            onChange={(e) => setStage(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={jobTitle}
-        onChange={(e) => setJobTitle(e.target.value)}
-      />
+          <input
+            type="text"
+            value={jobTitle}
+            onChange={(e) => setJobTitle(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={linkedinNote}
-        onChange={(e) => setLinkedinNote(e.target.value)}
-      />
+          <input
+            type="text"
+            value={linkedinNote}
+            onChange={(e) => setLinkedinNote(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={connectionSent}
-        onChange={(e) => setConnectionSent(e.target.value)}
-      />
+          <input
+            type="text"
+            value={connectionSent}
+            onChange={(e) => setConnectionSent(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={applyDate}
-        onChange={(e) => setApplyDate(e.target.value)}
-      />
+          <input
+            type="text"
+            value={applyDate}
+            onChange={(e) => setApplyDate(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={responseDate}
-        onChange={(e) => setResponseDate(e.target.value)}
-      />
+          <input
+            type="text"
+            value={responseDate}
+            onChange={(e) => setResponseDate(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-      />
+          <input
+            type="text"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={referral}
-        onChange={(e) => setReferral(e.target.value)}
-      />
+          <input
+            type="text"
+            value={referral}
+            onChange={(e) => setReferral(e.target.value)}
+          />
 
-      <input
-        type="text"
-        value={salary}
-        onChange={(e) => setSalary(e.target.value)}
-      />
-      <button onClick={handleCreate}>Create</button>
+          <input
+            type="text"
+            value={salary}
+            onChange={(e) => setSalary(e.target.value)}
+          />
+          <button onClick={handleCreate}>Create</button>
 
-      {/* {!show ? (
+          <button onClick={closeModal}>Close</button>
+
+          {/* {!show ? (
         <button onClick={handleCreate}>Create</button>
       ) : (
         <button onClick={handleUpdate}>Update</button>
       )} */}
-    </form>
+        </form>
+      </Modal>
+    </>
   );
 }
