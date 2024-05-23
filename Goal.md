@@ -1,0 +1,9 @@
+- [ ] Create a search bar feature for the data table
+- [ ] Style the modal for creating new applications
+- [ ] Implement Google Sign In
+- [ ] Implement email verification
+- [ ] Engineer a Profile
+- [ ] Application Calendar Commits
+- [ ] Create a web scraping page for job listing
+- [ ] Implement an Ai to review resumes
+- [ ] AST Resume Tracker
