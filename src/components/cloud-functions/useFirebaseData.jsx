@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import { firestore } from '../../firebase';
 
 export default function useFirebaseData(currentUser) {
     const [data, setData] = useState([]);
@@ -20,10 +20,9 @@ export default function useFirebaseData(currentUser) {
             console.error("Error fetching data: ", error);
         });
 
-        // Cleanup function to unsubscribe from the listener when the component unmounts
         return () => unsubscribe();
 
-    }, [currentUser]);  // Dependency on currentUser to reset if it changes
+    }, [currentUser]);
 
     return data;
 }

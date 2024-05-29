@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { writeBatch, doc } from "firebase/firestore";
-import { firestore } from "../firebase";
+import { firestore } from "../../firebase";
 
 
 export default function ApplicationTable({ applications, currentUser}) {
