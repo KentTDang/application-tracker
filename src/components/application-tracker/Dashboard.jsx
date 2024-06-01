@@ -15,7 +15,6 @@ export default function Dashboard() {
   const applications = useFirebaseData(currentUser);
   const collectionRef = collection(firestore, currentUser.uid);
 
-
   return (
     <>
       <Banner />

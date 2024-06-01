@@ -88,7 +88,7 @@ export default function ApplicationForm({ collectionRef }) {
         className={styles.modalStyle}
       >
         <div className={styles.reviewFormContainerStyle}>
-        <h1>Add Jobs</h1>
+          <h1>Add Jobs</h1>
 
           <form className={styles.reviewFormStyle}>
             <div className={styles.reviewFormRowStyle}>
