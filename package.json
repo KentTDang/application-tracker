@@ -21,6 +21,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
+    "react-jss": "^10.10.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
@@ -31,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "lint": "eslint .",
+    "prettier": "prettier . --write",
+    "test:prettier": "prettier --check"
   },
   "eslintConfig": {
     "extends": [
@@ -50,5 +53,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.2.5"
   }
 }

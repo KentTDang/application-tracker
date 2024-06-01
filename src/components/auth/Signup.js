@@ -1,49 +1,46 @@
-import React, { useState } from 'react'
-import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
-import { useAuth } from './AuthContext';
-import { Link, useNavigate } from "react-router-dom"
+import React, { useState } from "react";
+import { Form, Button, Card, Alert, Container } from "react-bootstrap";
+import { useAuth } from "./AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
-    setError("")
-    setLoading(true)
+    setError("");
+    setLoading(true);
 
     const data = new FormData(e.currentTarget);
-    const email = data.get("email")
-    const password = data.get("password")
-    const passwordConfirm = data.get("passwordConfirm")
-
-
-
+    const email = data.get("email");
+    const password = data.get("password");
+    const passwordConfirm = data.get("passwordConfirm");
 
     if (password !== passwordConfirm) {
-      setLoading(false)
+      setLoading(false);
       return setError("Passwords do not match");
     }
 
     try {
-      await signup(email, password, passwordConfirm)
-      navigate("/")
+      await signup(email, password, passwordConfirm);
+      navigate("/");
     } catch {
-      setError("Failed to create an account")
+      setError("Failed to create an account");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-
   }
 
   return (
     <>
-      <Container className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100vh" }}>
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ minHeight: "100vh" }}
+      >
         <div>
           <Card>
             <Card.Body>
@@ -52,17 +49,31 @@ export default function Signup() {
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control name="email" type="email" required></Form.Control>
+                  <Form.Control
+                    name="email"
+                    type="email"
+                    required
+                  ></Form.Control>
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control name="password" type="password" required></Form.Control>
+                  <Form.Control
+                    name="password"
+                    type="password"
+                    required
+                  ></Form.Control>
                 </Form.Group>
                 <Form.Group id="password-confirm">
                   <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control name="passwordConfirm" type="password" required></Form.Control>
+                  <Form.Control
+                    name="passwordConfirm"
+                    type="password"
+                    required
+                  ></Form.Control>
                 </Form.Group>
-                <Button disabled={loading} className="w-100 mt-4" type="submit">Sign Up</Button>
+                <Button disabled={loading} className="w-100 mt-4" type="submit">
+                  Sign Up
+                </Button>
               </Form>
             </Card.Body>
           </Card>
@@ -72,5 +83,5 @@ export default function Signup() {
         </div>
       </Container>
     </>
-  )
+  );
 }
