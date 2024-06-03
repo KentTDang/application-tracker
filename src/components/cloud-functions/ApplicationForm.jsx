@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import Modal from "react-modal";
 import { createUseStyles } from "react-jss";
+import {TextField} from '@mui/material'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function ApplicationForm({ collectionRef }) {
   const [company, setCompany] = useState(""); // Company
@@ -56,25 +59,42 @@ export default function ApplicationForm({ collectionRef }) {
       width: "100%",
     },
     reviewFormContainerStyle: {
-      backgroundColor: "black",
-      height: "45rem",
-      width: "45rem",
+      backgroundColor: "white",
+      height: "35rem",
+      width: "35rem",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      borderRadius: "12px",
+      boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px"
+
     },
     reviewFormStyle: {
-      height: "40rem",
-      width: "40rem",
-      backgroundColor: "lightblue",
-      "& > input": {
-        width: "40%",
-      },
-    },
-    reviewFormRowStyle: {
+      height: "25rem",
+      width: "24.6rem",
+      backgroundColor: "white",
       display: "grid",
       gridTemplateColumns: "repeat(2,1fr)",
+      gridColumnGap: "1rem",
+      gridRowGap: "1rem",
     },
+    reviewFormRowStyle: {
+      "& > input": {
+        borderRadius: "6px",
+        display: "block"
+      },
+      "& > label": {
+        display: "block"
+      }
+    },
+    buttonStyle: {
+      fontSize: "17px",
+      border: "transparent",
+      boxShadow: "2px 2px 4px rgba(0,0,0,0.4)",
+      background: "dodgerblue",
+      color: "white",
+      borderRadius: "4px",
+    }
   });
 
   const styles = useStyles();
@@ -88,94 +108,58 @@ export default function ApplicationForm({ collectionRef }) {
         className={styles.modalStyle}
       >
         <div className={styles.reviewFormContainerStyle}>
-          <h1>Add Jobs</h1>
-
           <form className={styles.reviewFormStyle}>
             <div className={styles.reviewFormRowStyle}>
-              <label>Company</label>
-              <input
-                type="text"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-              />
-
-              <label>Stage</label>
-              <input
-                type="text"
-                value={stage}
-                onChange={(e) => setStage(e.target.value)}
-              />
+              <TextField id="outlined-basic" label="Outlined" variant="outlined" value={company}
+                onChange={(e) => setCompany(e.target.value)}/>
             </div>
 
             <div className={styles.reviewFormRowStyle}>
-              <label>Job Title</label>
-              <input
-                type="text"
-                value={jobTitle}
-                onChange={(e) => setJobTitle(e.target.value)}
-              />
-              <label>LinkedIn Note</label>
-              <input
-                type="text"
-                value={linkedinNote}
-                onChange={(e) => setLinkedinNote(e.target.value)}
-              />
+              <TextField id="outlined-basic" label="Stage" variant="outlined" value={stage}
+                onChange={(e) => setCompany(e.target.value)}/>
             </div>
 
             <div className={styles.reviewFormRowStyle}>
-              <label>Connection Sent</label>
-              <input
-                type="text"
-                value={connectionSent}
-                onChange={(e) => setConnectionSent(e.target.value)}
-              />
-              <label>Apply Date</label>
-              <input
-                type="text"
-                value={applyDate}
-                onChange={(e) => setApplyDate(e.target.value)}
-              />
+              <TextField id="outlined-basic" label="Job Title" variant="outlined" value={jobTitle}
+                onChange={(e) => setCompany(e.target.value)}/>
             </div>
 
             <div className={styles.reviewFormRowStyle}>
-              <label>Response Date</label>
-              <input
-                type="text"
-                value={responseDate}
-                onChange={(e) => setResponseDate(e.target.value)}
-              />
-              <label>Link</label>
-              <input
-                type="text"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-              />
+              <TextField id="outlined-basic" label="LinkedIn Note" variant="outlined" value={linkedinNote}
+                onChange={(e) => setCompany(e.target.value)}/>
             </div>
 
             <div className={styles.reviewFormRowStyle}>
-              <label>Referral</label>
-              <input
-                type="text"
-                value={referral}
-                onChange={(e) => setReferral(e.target.value)}
-              />
-              <label>Salary</label>
-              <input
-                type="text"
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-              />
+              <TextField id="outlined-basic" label="Connections Sent" variant="outlined" value={connectionSent}
+                onChange={(e) => setCompany(e.target.value)}/>
             </div>
 
-            <button onClick={handleCreate}>Create</button>
+            <div className={styles.reviewFormRowStyle}>
+              <TextField id="outlined-basic" label="Apply Date" variant="outlined" value={applyDate}
+                onChange={(e) => setCompany(e.target.value)}/>
+            </div>
 
-            <button onClick={closeModal}>Close</button>
+            <div className={styles.reviewFormRowStyle}>
+              <TextField id="outlined-basic" label="Response Date" variant="outlined" value={responseDate}
+                onChange={(e) => setCompany(e.target.value)}/>
+            </div>
 
-            {/* {!show ? (
-        <button onClick={handleCreate}>Create</button>
-      ) : (
-        <button onClick={handleUpdate}>Update</button>
-      )} */}
+            <div className={styles.reviewFormRowStyle}>
+              <TextField id="outlined-basic" label="Link" variant="outlined" value={link}
+                onChange={(e) => setCompany(e.target.value)}/>
+            </div>
+
+            <div className={styles.reviewFormRowStyle}>
+              <TextField id="outlined-basic" label="Referral" variant="outlined" value={referral}
+                onChange={(e) => setCompany(e.target.value)}/>
+            </div>
+
+            <div className={styles.reviewFormRowStyle}>
+              <TextField id="outlined-basic" label="Salary" variant="outlined" value={salary}
+                onChange={(e) => setCompany(e.target.value)}/>
+            </div>
+            <button onClick={closeModal} className={styles.buttonStyle}>Cancel</button>
+            <button onClick={handleCreate} className={styles.buttonStyle}><FontAwesomeIcon icon={faPlus} /> Add Application </button>
           </form>
         </div>
       </Modal>
