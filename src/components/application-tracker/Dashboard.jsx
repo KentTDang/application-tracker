@@ -23,7 +23,6 @@ export default function Dashboard() {
         currentUser={currentUser}
         collectionRef={collectionRef}
       />
-      <ApplicationForm collectionRef={collectionRef} />
     </>
   );
 }
