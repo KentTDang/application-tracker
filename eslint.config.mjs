@@ -8,7 +8,7 @@ export default [
     languageOptions: { globals: globals.browser },
   },
   {
-    ignores: ["build/*", "node_modules/*", "public/*"],
+    ignores: ["build/*", "node_modules/*", "public/*", "src/firebase.js"],
   },
   pluginJs.configs.recommended,
   pluginReactConfig,

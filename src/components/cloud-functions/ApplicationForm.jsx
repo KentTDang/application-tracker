@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import Modal from "react-modal";
 import { createUseStyles } from "react-jss";
-import {TextField} from '@mui/material'
+import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Form, Button } from "react-bootstrap";
 
 export default function ApplicationForm({ collectionRef }) {
   const [company, setCompany] = useState(""); // Company
@@ -66,8 +67,7 @@ export default function ApplicationForm({ collectionRef }) {
       alignItems: "center",
       justifyContent: "center",
       borderRadius: "12px",
-      boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px"
-
+      boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
     },
     reviewFormStyle: {
       height: "25rem",
@@ -81,11 +81,11 @@ export default function ApplicationForm({ collectionRef }) {
     reviewFormRowStyle: {
       "& > input": {
         borderRadius: "6px",
-        display: "block"
+        display: "block",
       },
       "& > label": {
-        display: "block"
-      }
+        display: "block",
+      },
     },
     buttonStyle: {
       fontSize: "17px",
@@ -94,7 +94,7 @@ export default function ApplicationForm({ collectionRef }) {
       background: "dodgerblue",
       color: "white",
       borderRadius: "4px",
-    }
+    },
   });
 
   const styles = useStyles();
@@ -108,59 +108,80 @@ export default function ApplicationForm({ collectionRef }) {
         className={styles.modalStyle}
       >
         <div className={styles.reviewFormContainerStyle}>
-          <form className={styles.reviewFormStyle}>
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Outlined" variant="outlined" value={company}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Stage" variant="outlined" value={stage}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Job Title" variant="outlined" value={jobTitle}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="LinkedIn Note" variant="outlined" value={linkedinNote}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Connections Sent" variant="outlined" value={connectionSent}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Apply Date" variant="outlined" value={applyDate}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Response Date" variant="outlined" value={responseDate}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Link" variant="outlined" value={link}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Referral" variant="outlined" value={referral}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-
-            <div className={styles.reviewFormRowStyle}>
-              <TextField id="outlined-basic" label="Salary" variant="outlined" value={salary}
-                onChange={(e) => setCompany(e.target.value)}/>
-            </div>
-            <button onClick={closeModal} className={styles.buttonStyle}>Cancel</button>
-            <button onClick={handleCreate} className={styles.buttonStyle}><FontAwesomeIcon icon={faPlus} /> Add Application </button>
-          </form>
+          <Form className={styles.reviewFormStyle} onSubmit={handleCreate}>
+            <Form.Group>
+              <Form.Label>Company</Form.Label>
+              <Form.Control
+                onChange={(e) => setCompany(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Stage</Form.Label>
+              <Form.Control
+                onChange={(e) => setStage(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Job Title</Form.Label>
+              <Form.Control
+                onChange={(e) => setJobTitle(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>LinkedIn Note</Form.Label>
+              <Form.Control
+                onChange={(e) => setLinkedinNote(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Connections Sent</Form.Label>
+              <Form.Control
+                onChange={(e) => setConnectionSent(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Apply Date</Form.Label>
+              <Form.Control
+                onChange={(e) => setApplyDate(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Response Date</Form.Label>
+              <Form.Control
+                onChange={(e) => setResponseDate(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Link</Form.Label>
+              <Form.Control
+                onChange={(e) => setLink(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Referral</Form.Label>
+              <Form.Control
+                onChange={(e) => setReferral(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Salary</Form.Label>
+              <Form.Control
+                onChange={(e) => setSalary(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button onClick={closeModal}>Close</Button>
+            <Button type="submit">Add</Button>
+          </Form>
         </div>
       </Modal>
     </>
