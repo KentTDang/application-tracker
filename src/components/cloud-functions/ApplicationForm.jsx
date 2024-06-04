@@ -55,8 +55,8 @@ export default function ApplicationForm({ collectionRef }) {
     },
     reviewFormContainerStyle: {
       backgroundColor: "white",
-      height: "35rem",
-      width: "35rem",
+      height: "25rem",
+      width: "45rem",
       // display: "flex",
       // alignItems: "center",
       // justifyContent: "center",
