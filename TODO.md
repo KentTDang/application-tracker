@@ -2,8 +2,8 @@
 
 ## High Priority
 
-- [ ] Implement Eslint
-- [ ] Implement Prettier Format
+- [x] Implement Eslint
+- [x] Implement Prettier Format
 - [ ] Style Application Form
 - [ ] Create React Hook for Styles
 

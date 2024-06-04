@@ -23,8 +23,9 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { writeBatch, doc } from "firebase/firestore";
 import { firestore } from "../../firebase";
+import ApplicationForm from "./ApplicationForm";
 
-export default function ApplicationTable({ applications, currentUser }) {
+export default function ApplicationTable({ applications, currentUser, collectionRef}) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -247,10 +248,8 @@ export default function ApplicationTable({ applications, currentUser }) {
             </IconButton>
           </Tooltip>
         ) : (
-          <Tooltip title="Filter list">
-            <IconButton>
-              <FilterListIcon />
-            </IconButton>
+          <Tooltip title="Action_list">
+                      <ApplicationForm collectionRef={collectionRef}/>
           </Tooltip>
         )}
       </Toolbar>

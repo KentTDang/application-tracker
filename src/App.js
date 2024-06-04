@@ -1,3 +1,4 @@
+import React from "react";
 import Signup from "./components/auth/Signup";
 import Dashboard from "./components/application-tracker/Dashboard";
 import Login from "./components/auth/Login";
