@@ -95,53 +95,30 @@ export default function ApplicationTable({
       label: "Stage",
     },
     {
-      id: "jobTitle",
+      id: "positionTitle",
       numeric: true,
       disablePadding: false,
-      label: "Job Title",
+      label: "positionTitle",
     },
     {
-      id: "linkedinNote",
+      id: "date",
       numeric: true,
       disablePadding: false,
-      label: "LinkedIn Note",
+      label: "Date",
     },
     {
-      id: "connectionSent",
+      id: "location",
       numeric: true,
       disablePadding: false,
-      label: "Connection(s) Sent",
+      label: "Location",
     },
     {
-      id: "applyDate",
+      id: "resume",
       numeric: true,
       disablePadding: false,
-      label: "Apply Date",
+      label: "Resume Version",
     },
-    {
-      id: "responseDate",
-      numeric: true,
-      disablePadding: false,
-      label: "Response Date",
-    },
-    {
-      id: "link",
-      numeric: true,
-      disablePadding: false,
-      label: "Link",
-    },
-    {
-      id: "referral",
-      numeric: true,
-      disablePadding: false,
-      label: "Referral(s)",
-    },
-    {
-      id: "salary",
-      numeric: true,
-      disablePadding: false,
-      label: "Salary",
-    },
+
   ];
 
   function EnhancedTableHead(props) {
@@ -174,7 +151,7 @@ export default function ApplicationTable({
           {headCells.map((headCell) => (
             <TableCell
               key={headCell.id}
-              align={headCell.numeric ? "right" : "left"}
+              align="left"
               padding={headCell.disablePadding ? "none" : "normal"}
               sortDirection={orderBy === headCell.id ? order : false}
             >
@@ -384,15 +361,11 @@ export default function ApplicationTable({
                     >
                       {row.company}
                     </TableCell>
-                    <TableCell align="right">{row.stage}</TableCell>
-                    <TableCell align="right">{row.jobTitle}</TableCell>
-                    <TableCell align="right">{row.linkedinNote}</TableCell>
-                    <TableCell align="right">{row.connectionSent}</TableCell>
-                    <TableCell align="right">{row.applyDate}</TableCell>
-                    <TableCell align="right">{row.responseDate}</TableCell>
-                    <TableCell align="right">{row.link}</TableCell>
-                    <TableCell align="right">{row.referral}</TableCell>
-                    <TableCell align="right">{row.salary}</TableCell>
+                    <TableCell align="left">{row.stage}</TableCell>
+                    <TableCell align="left">{row.positionTitle}</TableCell>
+                    <TableCell align="left">{row.date}</TableCell>
+                    <TableCell align="left">{row.location}</TableCell>
+                    <TableCell align="left">{row.resume}</TableCell>
                   </TableRow>
                 );
               })}

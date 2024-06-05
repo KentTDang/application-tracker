@@ -3,7 +3,7 @@ import { addDoc } from "firebase/firestore";
 import Modal from "react-modal";
 import { createUseStyles } from "react-jss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faX} from "@fortawesome/free-solid-svg-icons";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
@@ -67,13 +67,33 @@ export default function ApplicationForm({ collectionRef }) {
       gridColumnGap: "1rem",
       gridRowGap: "1rem",
     },
+    reviewFormHeader: {
+      display: "flex",
+      justifyContent: "space-between"
+    },
+    closeFormButtonX: {
+      background: "transparent",
+      color: "gray",
+      border: "none",
+    },
+    addApplicationButton: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "3rem",
+      width: "10rem",
+      fontSize: "14.8px",
+      "& > svg": {
+        marginRight: '0.25rem'
+      }
+    },
   });
 
   const styles = useStyles();
 
   return (
     <>
-      <button onClick={openModal}>Open Modal</button>
+      <Button onClick={openModal} className={styles.addApplicationButton}><FontAwesomeIcon icon={faPlus} />Add Application</Button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -81,7 +101,10 @@ export default function ApplicationForm({ collectionRef }) {
       >
         <div className={styles.reviewFormContainerStyle}>
           <div>
-            <h2>Add Custom Application</h2>
+            <div className={styles.reviewFormHeader}>
+            <h2>Add Jobs</h2>
+            <Button className={styles.closeFormButtonX} onClick={closeModal}><FontAwesomeIcon icon={faX} /></Button>
+            </div>
             <Form className={styles.reviewFormStyle} onSubmit={handleCreate}>
               <Form.Group>
                 <Form.Label>Position Title</Form.Label>
