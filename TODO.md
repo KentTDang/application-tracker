@@ -20,6 +20,7 @@
 
 - [ ] Eslint No Floating Promises Rule
 - [ ] Eslint Equals Equals Equals
+- [ ] Company Name Search
 - [ ] Create a web scraping page for job listing
 - [ ] Implement an Ai to review resumes
 - [ ] AST Resume Tracker

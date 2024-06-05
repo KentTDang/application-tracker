@@ -4,11 +4,11 @@ import { firestore } from "../../firebase";
 import "../../styles/Dashboard.css";
 import { collection } from "firebase/firestore";
 
-import useFirebaseData from "../cloud-functions/useFirebaseData";
+import useFirebaseData from "../application/useFirebaseData";
 
 import Banner from "./Banner";
-import ApplicationForm from "../cloud-functions/ApplicationForm";
-import ApplicationTable from "../cloud-functions/ApplicationTable";
+import ApplicationForm from "../application/ApplicationForm";
+import ApplicationTable from "../application/ApplicationTable";
 
 export default function Dashboard() {
   const currentUser = useAuth().currentUser;

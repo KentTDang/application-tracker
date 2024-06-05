@@ -25,7 +25,11 @@ import { writeBatch, doc } from "firebase/firestore";
 import { firestore } from "../../firebase";
 import ApplicationForm from "./ApplicationForm";
 
-export default function ApplicationTable({ applications, currentUser, collectionRef}) {
+export default function ApplicationTable({
+  applications,
+  currentUser,
+  collectionRef,
+}) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -249,7 +253,7 @@ export default function ApplicationTable({ applications, currentUser, collection
           </Tooltip>
         ) : (
           <Tooltip title="Action_list">
-                      <ApplicationForm collectionRef={collectionRef}/>
+            <ApplicationForm collectionRef={collectionRef} />
           </Tooltip>
         )}
       </Toolbar>

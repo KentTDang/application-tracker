@@ -5,9 +5,9 @@ import { createUseStyles } from "react-jss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
 
 export default function ApplicationForm({ collectionRef }) {
-
   const [positionTitle, setPositionTitle] = useState(""); // Position
   const [company, setCompany] = useState(""); // Company
   const [location, setLocation] = useState("");
@@ -29,7 +29,7 @@ export default function ApplicationForm({ collectionRef }) {
     console.log(modalIsOpen);
   }
 
-  // Create Function  
+  // Create Function
   const handleCreate = async (e) => {
     e.preventDefault();
 
@@ -39,7 +39,7 @@ export default function ApplicationForm({ collectionRef }) {
       location: location,
       stage: stage,
       date: date,
-      resume: resume
+      resume: resume,
     };
     await addDoc(collectionRef, data);
   };
@@ -56,16 +56,11 @@ export default function ApplicationForm({ collectionRef }) {
       backgroundColor: "white",
       height: "25rem",
       width: "45rem",
-      // display: "flex",
-      // alignItems: "center",
-      // justifyContent: "center",
       padding: 24,
       borderRadius: "12px",
       boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
     },
     reviewFormStyle: {
-      // height: "25rem",
-      // width: "24.6rem",
       backgroundColor: "white",
       display: "grid",
       gridTemplateColumns: "repeat(2,1fr)",
@@ -86,74 +81,77 @@ export default function ApplicationForm({ collectionRef }) {
       >
         <div className={styles.reviewFormContainerStyle}>
           <div>
-          <h2>Add Custom Application</h2>
-          <Form className={styles.reviewFormStyle} onSubmit={handleCreate}>
+            <h2>Add Custom Application</h2>
+            <Form className={styles.reviewFormStyle} onSubmit={handleCreate}>
+              <Form.Group>
+                <Form.Label>Position Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Title"
+                  onChange={(e) => setPositionTitle(e.target.value)}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group>
-              <Form.Label>Position Title</Form.Label>
-              <Form.Control
-                placeholder="Title"
-                onChange={(e) => setPositionTitle(e.target.value)}
-                required
-              />
-            </Form.Group>
+              <Form.Group>
+                <Form.Label>Company</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Company"
+                  onChange={(e) => setCompany(e.target.value)}
+                  required
+                ></Form.Control>
+              </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Company</Form.Label>
-              <Form.Control
-                onChange={(e) => setCompany(e.target.value)}
-                placeholder="Company"
-                required
-              />
-            </Form.Group>
+              <Form.Group>
+                <Form.Label>Location</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Location"
+                  onChange={(e) => setLocation(e.target.value)}
+                  required
+                />
+              </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Location</Form.Label>
-              <Form.Control
-                placeholder="Location"
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </Form.Group>
-            
-            <Form.Group>
-              <Form.Label>Stage</Form.Label>
-              <Form.Select
-                placeholder="Select Stage"
-                onChange={(e) => setStage(e.target.value)}
-                required
-              >
-                <option>Select Stage</option>
-                <option>APPLIED</option>
-                <option>INTERVIEW</option>
-                <option>OFFER</option>
-                <option>NEXT TIME</option>
+              <Form.Group>
+                <Form.Label>Stage</Form.Label>
+                <Form.Select
+                  type="text"
+                  placeholder="Select Stage"
+                  onChange={(e) => setStage(e.target.value)}
+                  required
+                >
+                  <option>Select Stage</option>
+                  <option>APPLIED</option>
+                  <option>INTERVIEW</option>
+                  <option>OFFER</option>
+                  <option>NEXT TIME</option>
+                </Form.Select>
+              </Form.Group>
 
-              </Form.Select>
-            </Form.Group>
-            
-            <Form.Group>
-              <Form.Label>Date</Form.Label>
-              <Form.Control
-                placeholder="Date"
-                onChange={(e) => setDate(e.target.value)}
-                required
-              />
-            </Form.Group>
+              <Form.Group>
+                <Form.Label>Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  placeholder="Date"
+                  onChange={(e) => setDate(e.target.value)}
+                  required
+                />
+              </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Resume Uploaded</Form.Label>
-              <Form.Control
-                placeholder="Resume"
-                onChange={(e) => setResume(e.target.value)}
-                required
-              />
-            </Form.Group>
+              <Form.Group>
+                <Form.Label>Resume Uploaded</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Resume"
+                  onChange={(e) => setResume(e.target.value)}
+                  required
+                />
+              </Form.Group>
 
-            <Button onClick={closeModal}>Close</Button>
-            <Button type="submit">Add</Button>
-
-          </Form>
+              <Button onClick={closeModal}>Close</Button>
+              <Button type="submit">Add</Button>
+            </Form>
           </div>
         </div>
       </Modal>
