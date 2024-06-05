@@ -93,11 +93,9 @@ export default function ApplicationForm({ collectionRef }) {
                 <Form.Label>Stage</Form.Label>
                 <Form.Select
                   type="text"
-                  placeholder="Select Stage"
                   onChange={(e) => setStage(e.target.value)}
                   required
                 >
-                  <option disabled>Select Stage</option>
                   <option>APPLIED</option>
                   <option>INTERVIEW</option>
                   <option>OFFER</option>

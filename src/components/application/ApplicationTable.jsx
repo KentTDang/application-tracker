@@ -218,7 +218,7 @@ export default function ApplicationTable({
             id="tableTitle"
             component="div"
           >
-            Job-Application Tracker
+            Job Applications
           </Typography>
         )}
 

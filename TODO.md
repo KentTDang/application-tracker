@@ -2,10 +2,7 @@
 
 ## High Priority
 
-- [x] Implement Eslint
-- [x] Implement Prettier Format
-- [ ] Style Application Form
-- [ ] Create React Hook for Styles
+
 
 ## Medium Priority
 
@@ -24,3 +21,11 @@
 - [ ] Create a web scraping page for job listing
 - [ ] Implement an Ai to review resumes
 - [ ] AST Resume Tracker
+- [ ] Style Stage Drop Down
+- [ ] Resume Version Drop Down
+
+## Finished
+- [x] Implement Eslint
+- [x] Implement Prettier Format
+- [x] Style Application Form
+- [x] Create React Hook for Styles
