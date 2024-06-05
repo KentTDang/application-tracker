@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import Modal from "react-modal";
 import { createUseStyles } from "react-jss";
-import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button } from "react-bootstrap";
