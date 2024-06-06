@@ -17,15 +17,11 @@ export default function ApplicationForm({ collectionRef }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function openModal() {
-    console.log("Open");
     setModalIsOpen(true);
-    console.log(modalIsOpen);
   }
 
   function closeModal() {
-    console.log("Close");
     setModalIsOpen(false);
-    console.log(modalIsOpen);
   }
 
   const handleCreate = async (e) => {
