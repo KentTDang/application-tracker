@@ -2,23 +2,26 @@
 
 ## High Priority
 
-
+- [ ] Profile Page
+- [ ] Build Profile Settings
+- [ ] Application Calendar Commits
+- [ ] CI/CD Deployment Set Up
 
 ## Medium Priority
 
+- [ ] Google API
 - [ ] Clerk Auth
-- [ ] Build Profile Settings
-- [ ] Application Calendar Commits
 - [ ] Implement Google Sign In
 - [ ] Implement email verification
-- [ ] Create a search bar feature for the data table
+
 
 ## Low Priority
 
 - [ ] Eslint No Floating Promises Rule
 - [ ] Eslint Equals Equals Equals
-- [ ] Company Name Search
+- [ ] Side Navigation Bar
 - [ ] Create a web scraping page for job listing
+- [ ] Job Listing Page
 - [ ] Implement an Ai to review resumes
 - [ ] AST Resume Tracker
 - [ ] Style Stage Drop Down
@@ -29,3 +32,5 @@
 - [x] Implement Prettier Format
 - [x] Style Application Form
 - [x] Create React Hook for Styles
+- [x] Create a search bar feature for the data table
+- [x] Company Name Search
