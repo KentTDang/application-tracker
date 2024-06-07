@@ -6,10 +6,23 @@ import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+
 export default function ProfilePopup() {
   const { currentUser, logout } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   async function handleLogout() {
     setError("");
@@ -22,24 +35,46 @@ export default function ProfilePopup() {
     }
   }
 
+  const toggleDrawer = (open) => () => {
+    setIsProfileOpen(open);
+  };
+
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
-    <div className="profilie-container">
-      <Popup
-        trigger={
-          <button>
-            <FontAwesomeIcon icon={faUser} />
-          </button>
-        }
-      >
-        <div className="profile-dialog">
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <button variant="link" onClick={handleLogout}>
-            <FontAwesomeIcon icon={faRightFromBracket} />
-          </button>
-        </div>
-      </Popup>
+    <div>
+      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
+      <Drawer open={isProfileOpen} onClose={toggleDrawer(false)} anchor="right">
+        {DrawerList}
+      </Drawer>
     </div>
   );
 }
