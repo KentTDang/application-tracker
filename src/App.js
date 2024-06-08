@@ -9,6 +9,7 @@ import { AuthProvider } from "./components/auth/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+import ProfilePage from "./components/profile/ProfilePage";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <Routes>
             <Route path="/" element={<PrivateRoute />}>
               <Route index element={<Dashboard />} />
+            </Route>
+            <Route path="/profile" element={<PrivateRoute />}>
+              <Route index element={<ProfilePage />} />
             </Route>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />

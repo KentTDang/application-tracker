@@ -24,8 +24,9 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export default function ProfilePopup() {
   const { currentUser, logout } = useAuth();
   const [error, setError] = useState("");
-  const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   async function handleLogout() {
     setError("");
@@ -46,7 +47,7 @@ export default function ProfilePopup() {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => navigate("/profile")}>
               <ListItemIcon>
                 <PersonIcon />
               </ListItemIcon>
@@ -110,6 +111,8 @@ export default function ProfilePopup() {
       </List>
     </Box>
   );
+
+
 
   return (
     <div>
