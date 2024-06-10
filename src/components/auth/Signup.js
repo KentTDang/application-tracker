@@ -2,12 +2,31 @@ import React, { useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { FcGoogle } from "react-icons/fc";
+import useStyles from './Styles'
 
 export default function Signup() {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  async function googleSignIn() {
+    setError("");
+    setLoading(true);
+
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/");
+    } catch (error) {
+      console.error("Error signing in with Google: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -35,6 +54,8 @@ export default function Signup() {
     }
   }
 
+  const styles = useStyles();
+
   return (
     <>
       <Container
@@ -46,6 +67,13 @@ export default function Signup() {
             <Card.Body>
               <h2 className="text-center mb-4">Sign Up</h2>
               {error && <Alert variant="danger">{error}</Alert>}
+              <div className={styles.buttonRole}>
+              <button onClick={googleSignIn} className={styles.googleBtn}>
+                <FcGoogle className={styles.icon}/>
+                Sign up with Google
+              </button>
+              </div>
+              <div className={styles.divider}><span>or</span></div>
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
