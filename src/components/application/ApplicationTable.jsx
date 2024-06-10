@@ -35,8 +35,6 @@ export default function ApplicationTable({
 
   useEffect(() => {
     setRows(applications);
-    console.log("Setting Rows to Applications" + rows);
-    console.log("Applications updated", applications);
   }, [applications]);
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export default function ApplicationTable({
       await batch.commit();
       setSelected([]);
     } catch (error) {
-      console.log("Error performing batch delete: " + error);
+      console.error("Error performing batch delete: ", error);
     }
   };
 

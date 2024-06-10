@@ -12,7 +12,7 @@
 - [ ] Copy Gmail - The primary promotions and socail tabs can be an plus icon that allows you to add past applciations years and change between them
 - [ ] Google API
 - [ ] Clerk Auth
-- [ ] Implement Google Sign In
+- [x] Implement Google Sign In
 - [ ] Implement email verification
 
 

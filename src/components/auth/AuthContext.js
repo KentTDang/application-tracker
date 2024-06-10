@@ -12,7 +12,6 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
-    console.log(email + password);
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
@@ -29,7 +28,6 @@ export function AuthProvider({ children }) {
   }
 
   function updateEmail(email) {
-    console.log("Update email hit");
     return currentUser.updateEmail(email);
   }
 
