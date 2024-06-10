@@ -69,7 +69,7 @@ export default function Signup() {
               {error && <Alert variant="danger">{error}</Alert>}
               <div className={styles.buttonRole}>
               <button onClick={googleSignIn} className={styles.googleBtn}>
-                <FcGoogle />
+                <FcGoogle className={styles.icon}/>
                 Sign up with Google
               </button>
               </div>

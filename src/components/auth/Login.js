@@ -64,7 +64,7 @@ export default function Login() {
               {error && <Alert variant="danger">{error}</Alert>}
               <div className={styles.buttonRole}>
               <button onClick={googleSignIn} className={styles.googleBtn}>
-                <FcGoogle />
+                <FcGoogle className={styles.icon}/>
                 Log in with Google
               </button>
               </div>

@@ -44,7 +44,10 @@ const useStyles = createUseStyles({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        paddingBottom: "16px"
+        paddingBottom: "16px",
+        "& > fc": {
+          marginRight: '0.25rem'
+        }
     },
     divider: {
         fontSize: '16px',
@@ -67,6 +70,9 @@ const useStyles = createUseStyles({
           margin: '5px',
         },
       },
+      icon: {
+        marginRight: '0.25rem'
+      }
       
   });
 
