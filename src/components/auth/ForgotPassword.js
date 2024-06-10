@@ -18,14 +18,11 @@ export default function ForgotPassword() {
     const data = new FormData(e.currentTarget);
     const email = data.get("email");
 
-    console.log(email);
-
     try {
       setError("");
       setLoading(true);
       await resetPassword(email);
       setMessage("Check your inbox for further instructions");
-      console.log(email);
     } catch {
       setError("Failed to reset password");
     } finally {

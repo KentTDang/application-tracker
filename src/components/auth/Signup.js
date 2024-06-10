@@ -2,12 +2,31 @@ import React, { useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import { useAuth } from "./AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export default function Signup() {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+
+  async function googleSignIn() {
+
+    setError("");
+    setLoading(true);
+
+    try{
+      await signInWithPopup(auth, provider);
+      navigate("/");
+    } catch(error) {
+      console.error("Error signing in with Google: ", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -46,6 +65,7 @@ export default function Signup() {
             <Card.Body>
               <h2 className="text-center mb-4">Sign Up</h2>
               {error && <Alert variant="danger">{error}</Alert>}
+              <Button onClick={googleSignIn}>Google Sign In</Button>
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
