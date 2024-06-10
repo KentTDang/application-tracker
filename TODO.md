@@ -27,6 +27,7 @@
 - [ ] AST Resume Tracker
 - [ ] Style Stage Drop Down
 - [ ] Resume Version Drop Down
+- [ ] Dark Mode
 
 ## Finished
 - [x] Implement Eslint
