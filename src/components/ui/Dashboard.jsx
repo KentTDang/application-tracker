@@ -9,6 +9,7 @@ import useFirebaseData from "../application/useFirebaseData";
 import Banner from "./Banner";
 import ApplicationForm from "../application/ApplicationForm";
 import ApplicationTable from "../application/ApplicationTable";
+import Gmail from "../gmail/Gmail";
 
 export default function Dashboard() {
   const currentUser = useAuth().currentUser;
@@ -23,6 +24,7 @@ export default function Dashboard() {
         currentUser={currentUser}
         collectionRef={collectionRef}
       />
+      <Gmail />
     </>
   );
 }

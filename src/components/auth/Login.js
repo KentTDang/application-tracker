@@ -13,6 +13,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  provider.addScope("https://mail.google.com/");
   const styles = useStyles();
 
 
