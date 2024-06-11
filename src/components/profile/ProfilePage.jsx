@@ -9,7 +9,10 @@ export default function ProfilePage() {
   return (
     <>
         <Banner />
+        <img src={currentUser.photoURL} />
+        <h1>{currentUser.displayName}</h1>
         <h1>{currentUser.email}</h1>
+
     </>
   )
 }
