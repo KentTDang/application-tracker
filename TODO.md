@@ -14,6 +14,8 @@
 - [ ] Clerk Auth
 - [x] Implement Google Sign In
 - [ ] Implement email verification
+- [ ] Implement displayName on email sign up
+- [ ] Implement google redirect or style the popup to be in the center
 
 
 ## Low Priority

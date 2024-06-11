@@ -35,6 +35,8 @@ export default function Signup() {
     setLoading(true);
 
     const data = new FormData(e.currentTarget);
+    const firstName = data.get("firstName");
+    const lastName = data.get("lastName");
     const email = data.get("email");
     const password = data.get("password");
     const passwordConfirm = data.get("passwordConfirm");
@@ -75,6 +77,19 @@ export default function Signup() {
               </div>
               <div className={styles.divider}><span>or</span></div>
               <Form onSubmit={handleSubmit}>
+                <div style={{display:"flex", justifyContent:"space-between"}}>
+                <Form.Group id="firstName">
+                  <Form.Label>Fist Name</Form.Label>
+                  <Form.Control name="firstName" type="text" required>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group id="lastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control name="lastName" type="text" required>
+                  </Form.Control>
+                </Form.Group>  
+                </div>
+                
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
