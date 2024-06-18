@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import Modal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faX} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button } from "react-bootstrap";
-import useStyles from './Styles'
+import useStyles from "./Styles";
 
 export default function ApplicationForm({ collectionRef }) {
   const [positionTitle, setPositionTitle] = useState("");
@@ -42,7 +42,10 @@ export default function ApplicationForm({ collectionRef }) {
 
   return (
     <>
-      <Button onClick={openModal} className={styles.addApplicationButton}><FontAwesomeIcon icon={faPlus} />Add Application</Button>
+      <Button onClick={openModal} className={styles.addApplicationButton}>
+        <FontAwesomeIcon icon={faPlus} />
+        Add Application
+      </Button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -51,8 +54,10 @@ export default function ApplicationForm({ collectionRef }) {
         <div className={styles.reviewFormContainerStyle}>
           <div>
             <div className={styles.reviewFormHeader}>
-            <h2>Add Jobs</h2>
-            <Button className={styles.closeFormButtonX} onClick={closeModal}><FontAwesomeIcon icon={faX} /></Button>
+              <h2>Add Jobs</h2>
+              <Button className={styles.closeFormButtonX} onClick={closeModal}>
+                <FontAwesomeIcon icon={faX} />
+              </Button>
             </div>
             <Form className={styles.reviewFormStyle} onSubmit={handleCreate}>
               <Form.Group>
@@ -74,7 +79,7 @@ export default function ApplicationForm({ collectionRef }) {
                   required
                 />
               </Form.Group>
-              
+
               <Form.Group>
                 <Form.Label>Location</Form.Label>
                 <Form.Control

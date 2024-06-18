@@ -39,7 +39,7 @@ export default function ApplicationTable({
 
   useEffect(() => {
     const filteredRows = applications.filter((application) =>
-      application.positionTitle.toLowerCase().includes(search.toLowerCase())
+      application.positionTitle.toLowerCase().includes(search.toLowerCase()),
     );
     setRows(filteredRows);
   }, [search, applications]);
@@ -206,7 +206,7 @@ export default function ApplicationTable({
             bgcolor: (theme) =>
               alpha(
                 theme.palette.primary.main,
-                theme.palette.action.activatedOpacity
+                theme.palette.action.activatedOpacity,
               ),
           }),
         }}
@@ -287,7 +287,7 @@ export default function ApplicationTable({
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        selected.slice(selectedIndex + 1),
       );
     }
     setSelected(newSelected);
@@ -316,9 +316,9 @@ export default function ApplicationTable({
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
+        page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage, rows]
+    [order, orderBy, page, rowsPerPage, rows],
   );
 
   return (
