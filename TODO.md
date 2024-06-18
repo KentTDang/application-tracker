@@ -17,7 +17,6 @@
 - [ ] Implement displayName on email sign up
 - [ ] Implement google redirect or style the popup to be in the center
 
-
 ## Low Priority
 
 - [ ] Eslint No Floating Promises Rule
@@ -32,6 +31,7 @@
 - [ ] Dark Mode
 
 ## Finished
+
 - [x] Implement Eslint
 - [x] Implement Prettier Format
 - [x] Style Application Form
