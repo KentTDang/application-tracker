@@ -2,6 +2,9 @@
 
 ## High Priority
 
+- [ ] Google API
+- [ ] Gmail Token
+- [ ] Gmail Credentials
 - [ ] Profile Page
 - [ ] Build Profile Settings
 - [ ] Application Calendar Commits
@@ -10,7 +13,6 @@
 ## Medium Priority
 
 - [ ] Copy Gmail - The primary promotions and socail tabs can be an plus icon that allows you to add past applciations years and change between them
-- [ ] Google API
 - [ ] Clerk Auth
 - [x] Implement Google Sign In
 - [ ] Implement email verification
@@ -21,7 +23,7 @@
 
 - [ ] Eslint No Floating Promises Rule
 - [ ] Eslint Equals Equals Equals
-- [ ] Side Navigation Bar
+- [x] Side Navigation Bar
 - [ ] Create a web scraping page for job listing
 - [ ] Job Listing Page
 - [ ] Implement an Ai to review resumes
