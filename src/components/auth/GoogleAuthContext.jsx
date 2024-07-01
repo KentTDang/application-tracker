@@ -10,7 +10,7 @@ export default function GoogleAuthContext() {
 
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  provider.addScope("https://mail.google.com/");
+  provider.addScope("https://www.googleapis.com/auth/gmail.readonly");
 
   const navigate = useNavigate();
   const styles = useStyles();
@@ -20,7 +20,10 @@ export default function GoogleAuthContext() {
     setLoading(true);
 
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      localStorage.setItem("gmailToken", token);
       navigate("/");
     } catch (error) {
       console.error("Error signing in with Google: ", error);
